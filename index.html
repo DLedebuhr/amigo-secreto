@@ -327,12 +327,7 @@
         
         .christmas-divider {
             height: 1px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(184, 134, 11, 0.5), 
-                rgba(46, 139, 87, 0.5), 
-                rgba(178, 34, 34, 0.5), 
-                transparent);
+            background: rgba(184, 134, 11, 0.5);
             margin: 30px 0;
         }
         
@@ -532,7 +527,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
+
     <div class="snowflakes" id="snowflakes"></div>
     
     <div class="container">
@@ -546,24 +543,22 @@
         </header>
         
         <div id="message" class="message"></div>
-        
-        <!-- Tela 1: Criar Sorteio -->
+
         <div id="screen-create" class="card">
             <h2 class="section-title">Criar Novo Sorteio</h2>
             <div class="form-group">
                 <label class="form-label">Nome do Sorteio</label>
-                <input type="text" id="sorteio-nome" class="form-input" placeholder="Natal da Família 2025">
+                <input type="text" id="sorteio-nome" class="form-input" placeholder="Natal 2025">
             </div>
             <div class="form-group">
                 <label class="form-label">Código Secreto</label>
-                <input type="text" id="sorteio-codigo" class="form-input" placeholder="FAMILIA2025 (sem espaços)">
+                <input type="text" id="sorteio-codigo" class="form-input" placeholder="NATAL2025 (sem espaços)">
             </div>
             <button class="btn btn-primary" onclick="criarSorteio()" style="width: 100%;">
                 <i class="fas fa-plus-circle"></i> Criar Sorteio
             </button>
         </div>
         
-        <!-- Tela 2: Organizador -->
         <div id="screen-organizer" class="card hidden">
             <h2 class="section-title">Organizando: <span id="sorteio-nome-display" style="color: #b8860b;"></span></h2>
             
@@ -572,7 +567,6 @@
                 <input type="text" id="participante-nome" class="form-input" placeholder="Digite o nome completo">
             </div>
             
-            <!-- Sugestões de presentes -->
             <div class="suggestions-box" id="suggestions-container">
                 <div class="suggestions-title">
                     <i class="fas fa-gift"></i>
@@ -580,7 +574,6 @@
                 </div>
                 
                 <div id="suggestions-inputs">
-                    <!-- Inputs serão gerados dinamicamente aqui -->
                 </div>
                 
                 <div style="margin-top: 15px; display: flex; gap: 10px;">
@@ -623,7 +616,6 @@
             </div>
         </div>
         
-        <!-- Tela 3: Participante -->
         <div id="screen-participant" class="card hidden">
             <h2 class="section-title"><span id="participant-sorteio-name"></span></h2>
             
@@ -661,7 +653,6 @@
             </div>
         </div>
         
-        <!-- Tela 4: Resultado -->
         <div id="screen-result" class="result-screen hidden">
             <h2 class="result-title"> Seu Amigo Secreto é </h2>
             
@@ -669,15 +660,13 @@
             
             <div class="secret-name" id="secret-friend-name"></div>
             
-            <div class="christmas-divider"></div>
+            <div class="christmas-divider"></div>            
             
-            <!-- Sugestões de presentes do amigo sorteado -->
             <div id="friend-suggestions" class="gift-suggestions" style="display: none;">
                 <h3 class="friend-suggestions-title">
                     <i class="fas fa-lightbulb"></i> Sugestões de Presente do(a) <span id="friend-name"></span>
                 </h3>
-                <div id="suggestions-list">
-                    <!-- Sugestões serão inseridas aqui -->
+                <div id="suggestions-list">                  
                 </div>
                 <p style="color: #aaa; font-size: 0.9rem; margin-top: 15px; font-style: italic;">
                     Estas são sugestões feitas pelo seu amigo secreto. Use como inspiração!
@@ -709,13 +698,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
-        // CONFIGURAÇÃO SUPABASE
+
         const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_9sSZQCTFdzvYQwO3l10HOA_Hu7PEaLe';
         
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        // Estado da aplicação
         let estado = {
             sorteio: null,
             participante: null,
@@ -723,7 +711,6 @@
             isOrganizador: false
         };
         
-        // Mostrar mensagem
         function mostrarMensagem(texto, tipo = 'success') {
             const el = document.getElementById('message');
             el.textContent = texto;
@@ -735,7 +722,6 @@
             mostrarMensagem(texto, 'error');
         }
         
-        // Alternar entre telas
         function mostrarTela(id) {
             ['screen-create', 'screen-organizer', 'screen-participant', 'screen-result'].forEach(screen => {
                 document.getElementById(screen).classList.add('hidden');
@@ -743,7 +729,6 @@
             document.getElementById(id).classList.remove('hidden');
         }
         
-        // 1. CRIAR SORTEIO
         async function criarSorteio() {
             const nome = document.getElementById('sorteio-nome').value.trim();
             const codigo = document.getElementById('sorteio-codigo').value.trim().toUpperCase();
@@ -780,8 +765,7 @@
                 document.getElementById('sorteio-nome-display').textContent = nome;
                 mostrarTela('screen-organizer');
                 mostrarMensagem('Sorteio criado com sucesso!');
-                
-                // Adicionar um campo de sugestão inicial
+                              
                 adicionarCampoSugestao();
                 
             } catch (error) {
@@ -789,7 +773,6 @@
             }
         }
         
-        // FUNÇÕES PARA GERENCIAR SUGESTÕES
         function adicionarCampoSugestao() {
             const container = document.getElementById('suggestions-inputs');
             const count = container.children.length;
@@ -859,7 +842,6 @@
             mostrarMensagem('Formulário limpo!');
         }
         
-        // 2. ADICIONAR PARTICIPANTE COM SUGESTÕES
         async function adicionarParticipante() {
             const nome = document.getElementById('participante-nome').value.trim();
             
@@ -868,14 +850,12 @@
                 return;
             }
             
-            // Coletar sugestões
             const sugestoesInputs = document.querySelectorAll('.suggestion-input');
             const sugestoes = Array.from(sugestoesInputs)
                 .map(input => input.value.trim())
                 .filter(sugestao => sugestao.length > 0);
             
             try {
-                // Primeiro, criar o participante
                 const { data, error } = await supabase
                     .from('participantes')
                     .insert([{
@@ -894,7 +874,6 @@
                     return;
                 }
                 
-                // Se houver sugestões, adicioná-las
                 if (sugestoes.length > 0) {
                     const sugestoesData = sugestoes.map(sugestao => ({
                         participante_id: data.id,
@@ -911,10 +890,9 @@
                     }
                 }
                 
-                // Limpar formulário e manter um campo de sugestão
                 document.getElementById('participante-nome').value = '';
                 document.getElementById('suggestions-inputs').innerHTML = '';
-                adicionarCampoSugestao(); // Adiciona um campo vazio para o próximo
+                adicionarCampoSugestao(); 
                 
                 await carregarParticipantes();
                 
@@ -930,7 +908,6 @@
             }
         }
         
-        // 3. CARREGAR PARTICIPANTES
         async function carregarParticipantes() {
             try {
                 const { data, error } = await supabase
@@ -962,7 +939,6 @@
             }
             
             for (const p of estado.participantes) {
-                // Buscar sugestões do participante
                 const { data: sugestoes } = await supabase
                     .from('sugestoes_presentes')
                     .select('sugestao')
@@ -989,7 +965,6 @@
             }
         }
         
-        // 4. GERAR LINKS
         async function gerarLinks() {
             if (estado.participantes.length < 2) {
                 mostrarErro('Adicione pelo menos 2 participantes');
@@ -1002,7 +977,6 @@
             for (const p of estado.participantes) {
                 const url = `${window.location.origin}${window.location.pathname}?sorteio=${estado.sorteio.codigo}&participante=${encodeURIComponent(p.nome)}`;
                 
-                // Buscar sugestões para mostrar no link
                 const { data: sugestoes } = await supabase
                     .from('sugestoes_presentes')
                     .select('sugestao')
@@ -1054,7 +1028,6 @@
             });
         }
         
-        // 5. VERIFICAR SE É PARTICIPANTE
         async function verificarParticipante() {
             const params = new URLSearchParams(window.location.search);
             const codigoSorteio = params.get('sorteio');
@@ -1065,7 +1038,6 @@
             }
             
             try {
-                // Buscar sorteio
                 const { data: sorteioData, error: sorteioError } = await supabase
                     .from('sorteios')
                     .select('*')
@@ -1079,7 +1051,6 @@
                 
                 estado.sorteio = sorteioData;
                 
-                // Buscar participante
                 const { data: participanteData, error: participanteError } = await supabase
                     .from('participantes')
                     .select('*')
@@ -1094,7 +1065,6 @@
                 
                 estado.participante = participanteData;
                 
-                // Mostrar tela do participante
                 mostrarTela('screen-participant');
                 document.getElementById('participant-sorteio-name').textContent = estado.sorteio.nome;
                 document.getElementById('participant-name').textContent = estado.participante.nome;
@@ -1115,16 +1085,14 @@
             }
         }
         
-        // 6. REALIZAR SORTEIO
         async function realizarSorteio() {
             try {
-                // Verificar se já sorteou
+           
                 if (estado.participante.ja_sorteou) {
                     await verResultadoNovamente();
                     return;
                 }
                 
-                // Buscar todos os participantes
                 const { data: todosParticipantes, error } = await supabase
                     .from('participantes')
                     .select('*')
@@ -1132,10 +1100,8 @@
                 
                 if (error) throw error;
                 
-                // Filtrar possíveis amigos (não pode ser ele mesmo)
                 let possiveis = todosParticipantes.filter(p => p.id !== estado.participante.id);
                 
-                // Priorizar quem ainda não foi sorteado
                 const naoSorteadoAinda = possiveis.filter(p => !p.ja_foi_sorteado);
                 if (naoSorteadoAinda.length > 0) {
                     possiveis = naoSorteadoAinda;
@@ -1146,10 +1112,8 @@
                     return;
                 }
                 
-                // Sortear aleatoriamente
                 const amigoSorteado = possiveis[Math.floor(Math.random() * possiveis.length)];
                 
-                // Atualizar no banco
                 const { error: error1 } = await supabase
                     .from('participantes')
                     .update({
@@ -1161,7 +1125,6 @@
                 
                 if (error1) throw error1;
                 
-                // Marcar o amigo sorteado como "já foi sorteado"
                 const { error: error2 } = await supabase
                     .from('participantes')
                     .update({
@@ -1171,14 +1134,11 @@
                 
                 if (error2) throw error2;
                 
-                // Atualizar estado local
                 estado.participante.ja_sorteou = true;
                 estado.participante.tirou = amigoSorteado.nome;
                 
-                // Criar efeitos visuais
                 criarEfeitosNatalinos();
                 
-                // Mostrar resultado com sugestões
                 setTimeout(async () => {
                     await mostrarResultadoCompleto(amigoSorteado);
                     mostrarMensagem('Amigo secreto revelado com sucesso!');
@@ -1189,12 +1149,10 @@
             }
         }
         
-        // MOSTRAR RESULTADO COM SUGESTÕES
         async function mostrarResultadoCompleto(amigoSorteado) {
             document.getElementById('secret-friend-name').textContent = amigoSorteado.nome;
             document.getElementById('friend-name').textContent = amigoSorteado.nome;
             
-            // Buscar sugestões do amigo sorteado
             const { data: sugestoes } = await supabase
                 .from('sugestoes_presentes')
                 .select('sugestao')
@@ -1222,14 +1180,14 @@
             mostrarTela('screen-result');
         }
         
-        // VER RESULTADO NOVAMENTE
+    
         async function verResultadoNovamente() {
             if (!estado.participante.tirou) {
                 mostrarErro('Você ainda não sorteou');
                 return;
             }
             
-            // Buscar o amigo sorteado pelo nome
+        
             const { data: amigoSorteado } = await supabase
                 .from('participantes')
                 .select('*')
@@ -1244,19 +1202,19 @@
             }
         }
         
-        // FUNÇÃO SIMPLIFICADA PARA MOSTRAR APENAS NOME
+     
         function mostrarResultado(nome) {
             document.getElementById('secret-friend-name').textContent = nome;
             document.getElementById('friend-suggestions').style.display = 'none';
             mostrarTela('screen-result');
         }
         
-        // FUNÇÃO PARA VOLTAR AO INÍCIO
+    
         function inicio() {
             window.location.href = window.location.pathname;
         }
         
-        // CRIAR EFEITOS NATALINOS
+     
         function criarEfeitosNatalinos() {
             for (let i = 0; i < 30; i++) {
                 setTimeout(() => {
@@ -1288,7 +1246,7 @@
             }
         }
         
-        // CRIAR FLOCOS DE NEVE
+      
         function criarFlocosDeNeve() {
             const snowflakesContainer = document.getElementById('snowflakes');
             const snowflakeCount = 50;
@@ -1334,7 +1292,7 @@
             document.head.appendChild(style);
         }
         
-        // INICIALIZAÇÃO
+      
         async function init() {
             criarFlocosDeNeve();
             
@@ -1345,7 +1303,7 @@
             }
         }
         
-        // Iniciar
+      
         window.onload = init;
     </script>
 </body>
