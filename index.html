@@ -353,15 +353,120 @@
             opacity: 0.8;
         }
         
-        /* Novos estilos para sugestões de presentes */
-        .gift-suggestions {
-            background: rgba(255, 255, 255, 0.05);
+        /* Estilos para sugestões */
+        .suggestions-box {
+            background: rgba(184, 134, 11, 0.08);
+            border: 1px solid rgba(184, 134, 11, 0.2);
             border-radius: 8px;
             padding: 20px;
             margin: 20px 0;
         }
         
         .suggestion-item {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .suggestion-number {
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(184, 134, 11, 0.3);
+            color: #b8860b;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: 1px solid rgba(184, 134, 11, 0.5);
+        }
+        
+        .suggestion-input-wrapper {
+            margin-left: 20px;
+        }
+        
+        .suggestion-input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: #fff;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .suggestion-input:focus {
+            outline: none;
+            border-color: #b8860b;
+            background: rgba(184, 134, 11, 0.1);
+        }
+        
+        .suggestions-title {
+            color: #b8860b;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .suggestions-title i {
+            font-size: 0.9rem;
+        }
+        
+        .add-suggestion-btn {
+            background: rgba(46, 139, 87, 0.2);
+            color: #2e8b57;
+            border: 1px solid rgba(46, 139, 87, 0.3);
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .add-suggestion-btn:hover {
+            background: rgba(46, 139, 87, 0.3);
+        }
+        
+        .remove-suggestion-btn {
+            background: rgba(178, 34, 34, 0.2);
+            color: #b22222;
+            border: 1px solid rgba(178, 34, 34, 0.3);
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 10px;
+        }
+        
+        .remove-suggestion-btn:hover {
+            background: rgba(178, 34, 34, 0.3);
+        }
+        
+        .gift-suggestions {
+            background: rgba(184, 134, 11, 0.1);
+            border: 1px solid rgba(184, 134, 11, 0.2);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .friend-suggestion-item {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
@@ -370,7 +475,7 @@
             border-radius: 5px;
         }
         
-        .suggestion-number {
+        .friend-suggestion-number {
             background: rgba(184, 134, 11, 0.2);
             color: #b8860b;
             width: 30px;
@@ -384,70 +489,20 @@
             border: 1px solid rgba(184, 134, 11, 0.3);
         }
         
-        .suggestion-text {
+        .friend-suggestion-text {
             flex: 1;
             color: #e8e6e3;
         }
         
-        .suggestions-title {
+        .friend-suggestions-title {
             color: #b8860b;
             font-size: 1.2rem;
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 1px solid rgba(184, 134, 11, 0.3);
-        }
-        
-        .suggestions-box {
-            background: rgba(184, 134, 11, 0.1);
-            border: 1px solid rgba(184, 134, 11, 0.2);
-            border-radius: 8px;
-            padding: 25px;
-            margin: 25px 0;
-        }
-        
-        .suggestion-input-group {
             display: flex;
+            align-items: center;
             gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .suggestion-input {
-            flex: 1;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            color: #fff;
-            font-size: 0.95rem;
-        }
-        
-        .remove-suggestion {
-            background: rgba(178, 34, 34, 0.2);
-            color: #b22222;
-            border: 1px solid rgba(178, 34, 34, 0.3);
-            border-radius: 5px;
-            padding: 0 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .remove-suggestion:hover {
-            background: rgba(178, 34, 34, 0.3);
-        }
-        
-        .add-suggestion-btn {
-            background: rgba(46, 139, 87, 0.2);
-            color: #2e8b57;
-            border: 1px solid rgba(46, 139, 87, 0.3);
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: all 0.3s ease;
-        }
-        
-        .add-suggestion-btn:hover {
-            background: rgba(46, 139, 87, 0.3);
         }
         
         @media (max-width: 768px) {
@@ -471,10 +526,6 @@
             .btn {
                 padding: 12px 25px;
                 width: 100%;
-            }
-            
-            .suggestion-input-group {
-                flex-direction: column;
             }
         }
     </style>
@@ -517,26 +568,36 @@
             <h2 class="section-title">Organizando: <span id="sorteio-nome-display" style="color: #b8860b;"></span></h2>
             
             <div class="form-group">
-                <label class="form-label">Adicionar Participante</label>
-                <input type="text" id="participante-nome" class="form-input" placeholder="Nome do participante">
+                <label class="form-label">Nome do Participante</label>
+                <input type="text" id="participante-nome" class="form-input" placeholder="Digite o nome completo">
             </div>
             
-            <!-- Adicionar sugestões de presentes -->
-            <div class="form-group" id="sugestoes-container" style="display: none;">
-                <label class="form-label">Sugestões de Presente (opcional)</label>
-                <div id="sugestoes-inputs">
-                    <!-- Inputs serão gerados aqui -->
+            <!-- Sugestões de presentes -->
+            <div class="suggestions-box" id="suggestions-container">
+                <div class="suggestions-title">
+                    <i class="fas fa-gift"></i>
+                    <span>Sugestões de Presente (opcional)</span>
                 </div>
-                <button type="button" class="add-suggestion-btn" onclick="adicionarSugestaoInput()" style="margin-top: 10px;">
-                    <i class="fas fa-plus"></i> Adicionar Sugestão
-                </button>
+                
+                <div id="suggestions-inputs">
+                    <!-- Inputs serão gerados dinamicamente aqui -->
+                </div>
+                
+                <div style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button type="button" class="add-suggestion-btn" onclick="adicionarCampoSugestao()">
+                        <i class="fas fa-plus"></i> Adicionar Sugestão
+                    </button>
+                    <button type="button" class="remove-suggestion-btn" onclick="removerTodasSugestoes()">
+                        <i class="fas fa-trash"></i> Limpar Todas
+                    </button>
+                </div>
             </div>
             
-            <button class="btn" onclick="adicionarParticipante()" style="width: 100%;">
-                <i class="fas fa-user-plus"></i> Adicionar à Lista
+            <button class="btn btn-primary" onclick="adicionarParticipante()" style="width: 100%; margin-top: 20px;">
+                <i class="fas fa-user-plus"></i> Adicionar Participante
             </button>
             
-            <h3 class="section-title">Participantes (<span id="participant-count">0</span>)</h3>
+            <h3 class="section-title">Lista de Participantes (<span id="participant-count">0</span>)</h3>
             
             <div class="participant-list" id="participant-list">
                 <p class="text-center text-muted">Nenhum participante ainda. Adicione o primeiro.</p>
@@ -544,14 +605,19 @@
             
             <div class="christmas-divider"></div>
             
-            <button class="btn btn-primary" onclick="gerarLinks()" style="width: 100%;">
-                <i class="fas fa-link"></i> Gerar Links Individuais
-            </button>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="gerarLinks()" style="flex: 1;">
+                    <i class="fas fa-link"></i> Gerar Links Individuais
+                </button>
+                <button class="btn" onclick="limparFormulario()" style="flex: 1;">
+                    <i class="fas fa-redo"></i> Limpar Formulário
+                </button>
+            </div>
             
             <div id="links-container" class="hidden">
                 <h3 class="section-title">Links Pessoais</h3>
                 <p class="text-muted" style="margin-bottom: 20px;">
-                    Envie cada link para o participante correspondente.
+                    Envie cada link para o participante correspondente:
                 </p>
                 <div id="links-list"></div>
             </div>
@@ -570,7 +636,6 @@
                 </p>
             </div>
             
-            <!-- Se o participante ainda não sorteou -->
             <div id="participant-draw" class="hidden">
                 <div class="text-center" style="margin: 30px 0;">
                     <p style="color: #ccc; margin-bottom: 20px;">
@@ -583,7 +648,6 @@
                 </button>
             </div>
             
-            <!-- Se o participante já sorteou -->
             <div id="participant-result" class="hidden">
                 <div class="text-center" style="margin: 30px 0;">
                     <p style="color: #ccc; margin-bottom: 20px;">
@@ -609,7 +673,7 @@
             
             <!-- Sugestões de presentes do amigo sorteado -->
             <div id="friend-suggestions" class="gift-suggestions" style="display: none;">
-                <h3 class="suggestions-title">
+                <h3 class="friend-suggestions-title">
                     <i class="fas fa-lightbulb"></i> Sugestões de Presente do(a) <span id="friend-name"></span>
                 </h3>
                 <div id="suggestions-list">
@@ -656,8 +720,7 @@
             sorteio: null,
             participante: null,
             participantes: [],
-            isOrganizador: false,
-            sugestoesTemp: []
+            isOrganizador: false
         };
         
         // Mostrar mensagem
@@ -718,47 +781,82 @@
                 mostrarTela('screen-organizer');
                 mostrarMensagem('Sorteio criado com sucesso!');
                 
-                // Mostrar campo de sugestões
-                document.getElementById('sugestoes-container').style.display = 'block';
+                // Adicionar um campo de sugestão inicial
+                adicionarCampoSugestao();
                 
             } catch (error) {
                 mostrarErro('Erro: ' + error.message);
             }
         }
         
-        // Gerenciar sugestões de presentes
-        function adicionarSugestaoInput() {
-            const container = document.getElementById('sugestoes-inputs');
-            const index = container.children.length;
+        // FUNÇÕES PARA GERENCIAR SUGESTÕES
+        function adicionarCampoSugestao() {
+            const container = document.getElementById('suggestions-inputs');
+            const count = container.children.length;
             
-            const div = document.createElement('div');
-            div.className = 'suggestion-input-group';
-            div.innerHTML = `
-                <input type="text" class="suggestion-input" 
-                       placeholder="Sugestão ${index + 1} (ex: Livro, Perfume, Camiseta)" 
-                       id="sugestao-${index}">
-                <button type="button" class="remove-suggestion" onclick="removerSugestaoInput(this)">
-                    <i class="fas fa-times"></i>
-                </button>
+            if (count >= 10) {
+                mostrarErro('Máximo de 10 sugestões por participante');
+                return;
+            }
+            
+            const item = document.createElement('div');
+            item.className = 'suggestion-item';
+            item.innerHTML = `
+                <div class="suggestion-number">${count + 1}</div>
+                <div class="suggestion-input-wrapper">
+                    <input type="text" 
+                           class="suggestion-input" 
+                           placeholder="Sugestão ${count + 1} (ex: Livro, Perfume, Camiseta)" 
+                           onkeyup="validarSugestoes()">
+                </div>
             `;
-            container.appendChild(div);
+            container.appendChild(item);
             
-            estado.sugestoesTemp.push('');
+            validarSugestoes();
         }
         
-        function removerSugestaoInput(button) {
-            const div = button.parentElement;
-            div.remove();
-            
-            // Atualizar índices
-            atualizarIndicesSugestoes();
+        function removerCampoSugestao() {
+            const container = document.getElementById('suggestions-inputs');
+            if (container.children.length > 0) {
+                container.lastElementChild.remove();
+                renumberarSugestoes();
+            }
         }
         
-        function atualizarIndicesSugestoes() {
-            const inputs = document.querySelectorAll('.suggestion-input');
-            inputs.forEach((input, index) => {
-                input.placeholder = `Sugestão ${index + 1} (ex: Livro, Perfume, Camiseta)`;
+        function removerTodasSugestoes() {
+            const container = document.getElementById('suggestions-inputs');
+            container.innerHTML = '';
+            validarSugestoes();
+        }
+        
+        function renumberarSugestoes() {
+            const inputs = document.querySelectorAll('.suggestion-item');
+            inputs.forEach((item, index) => {
+                const numberDiv = item.querySelector('.suggestion-number');
+                const input = item.querySelector('.suggestion-input');
+                
+                if (numberDiv) numberDiv.textContent = index + 1;
+                if (input) input.placeholder = `Sugestão ${index + 1} (ex: Livro, Perfume, Camiseta)`;
             });
+        }
+        
+        function validarSugestoes() {
+            const inputs = document.querySelectorAll('.suggestion-input');
+            let todasVazias = true;
+            
+            inputs.forEach(input => {
+                if (input.value.trim().length > 0) {
+                    todasVazias = false;
+                }
+            });
+            
+            return !todasVazias;
+        }
+        
+        function limparFormulario() {
+            document.getElementById('participante-nome').value = '';
+            document.getElementById('suggestions-inputs').innerHTML = '';
+            mostrarMensagem('Formulário limpo!');
         }
         
         // 2. ADICIONAR PARTICIPANTE COM SUGESTÕES
@@ -766,7 +864,7 @@
             const nome = document.getElementById('participante-nome').value.trim();
             
             if (!nome) {
-                mostrarErro('Por favor, digite um nome');
+                mostrarErro('Por favor, digite o nome do participante');
                 return;
             }
             
@@ -798,24 +896,34 @@
                 
                 // Se houver sugestões, adicioná-las
                 if (sugestoes.length > 0) {
-                    for (const sugestao of sugestoes) {
-                        await supabase
-                            .from('sugestoes_presentes')
-                            .insert([{
-                                participante_id: data.id,
-                                sugestao: sugestao,
-                                sorteio_id: estado.sorteio.id
-                            }]);
+                    const sugestoesData = sugestoes.map(sugestao => ({
+                        participante_id: data.id,
+                        sugestao: sugestao,
+                        sorteio_id: estado.sorteio.id
+                    }));
+                    
+                    const { error: sugestoesError } = await supabase
+                        .from('sugestoes_presentes')
+                        .insert(sugestoesData);
+                    
+                    if (sugestoesError) {
+                        console.error('Erro ao salvar sugestões:', sugestoesError);
                     }
                 }
                 
-                // Limpar formulário
+                // Limpar formulário e manter um campo de sugestão
                 document.getElementById('participante-nome').value = '';
-                document.getElementById('sugestoes-inputs').innerHTML = '';
-                estado.sugestoesTemp = [];
+                document.getElementById('suggestions-inputs').innerHTML = '';
+                adicionarCampoSugestao(); // Adiciona um campo vazio para o próximo
                 
                 await carregarParticipantes();
-                mostrarMensagem(`${nome} adicionado com sucesso! ${sugestoes.length > 0 ? 'Sugestões salvas!' : ''}`);
+                
+                const mensagem = `${nome} adicionado com sucesso!`;
+                if (sugestoes.length > 0) {
+                    mostrarMensagem(`${mensagem} ${sugestoes.length} sugestão(ões) salva(s).`);
+                } else {
+                    mostrarMensagem(mensagem);
+                }
                 
             } catch (error) {
                 mostrarErro('Erro: ' + error.message);
@@ -841,7 +949,7 @@
             }
         }
         
-        function atualizarListaParticipantes() {
+        async function atualizarListaParticipantes() {
             const container = document.getElementById('participant-list');
             const count = document.getElementById('participant-count');
             
@@ -853,15 +961,15 @@
                 return;
             }
             
-            estado.participantes.forEach(async (p) => {
-                const div = document.createElement('div');
-                div.className = 'participant-item';
-                
+            for (const p of estado.participantes) {
                 // Buscar sugestões do participante
                 const { data: sugestoes } = await supabase
                     .from('sugestoes_presentes')
                     .select('sugestao')
                     .eq('participante_id', p.id);
+                
+                const div = document.createElement('div');
+                div.className = 'participant-item';
                 
                 const statusClass = p.ja_sorteou ? 'status-done' : 'status-waiting';
                 const statusText = p.ja_sorteou ? `Sorteado` : 'Aguardando';
@@ -878,7 +986,7 @@
                     <div class="participant-status ${statusClass}">${statusText}</div>
                 `;
                 container.appendChild(div);
-            });
+            }
         }
         
         // 4. GERAR LINKS
@@ -891,30 +999,51 @@
             const container = document.getElementById('links-list');
             container.innerHTML = '';
             
-            estado.participantes.forEach(p => {
+            for (const p of estado.participantes) {
                 const url = `${window.location.origin}${window.location.pathname}?sorteio=${estado.sorteio.codigo}&participante=${encodeURIComponent(p.nome)}`;
+                
+                // Buscar sugestões para mostrar no link
+                const { data: sugestoes } = await supabase
+                    .from('sugestoes_presentes')
+                    .select('sugestao')
+                    .eq('participante_id', p.id);
                 
                 const linkBox = document.createElement('div');
                 linkBox.className = 'link-box';
                 linkBox.innerHTML = `
+                    <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong style="color: #fff;">${p.nome}</strong>
+                            ${sugestoes && sugestoes.length > 0 ? 
+                                `<span style="font-size: 0.8rem; color: #b8860b; margin-left: 10px;">
+                                    <i class="fas fa-gift"></i> ${sugestoes.length}
+                                </span>` : ''
+                            }
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <i class="fas fa-copy" style="color: #b8860b; cursor: pointer;" 
+                               onclick="copiarLink('${url}', '${p.nome}')" 
+                               title="Copiar link"></i>
+                        </div>
+                    </div>
                     <div style="margin-bottom: 10px;">
-                        <strong style="color: #fff;">${p.nome}</strong>
-                        <i class="fas fa-copy" style="float: right; color: #b8860b; cursor: pointer;" 
-                           onclick="copiarLink('${url}', '${p.nome}')" 
-                           title="Copiar link"></i>
+                        <a href="${url}" style="word-break: break-all; font-size: 0.85rem;">${url}</a>
                     </div>
-                    <div style="margin-bottom: 15px;">
-                        <a href="${url}">${url}</a>
-                    </div>
-                    <div class="text-muted" style="font-size: 0.85rem;">
-                        Envie este link para ${p.nome}
-                    </div>
+                    ${sugestoes && sugestoes.length > 0 ? 
+                        `<div style="font-size: 0.8rem; color: #aaa; margin-top: 10px;">
+                            <div><strong>Sugestões:</strong></div>
+                            ${sugestoes.slice(0, 2).map((s, i) => 
+                                `<div>${i+1}. ${s.sugestao}</div>`
+                            ).join('')}
+                            ${sugestoes.length > 2 ? `<div>... e mais ${sugestoes.length - 2}</div>` : ''}
+                        </div>` : ''
+                    }
                 `;
                 container.appendChild(linkBox);
-            });
+            }
             
             document.getElementById('links-container').classList.remove('hidden');
-            mostrarMensagem('Links gerados com sucesso!');
+            mostrarMensagem(`${estado.participantes.length} links gerados com sucesso!`);
         }
         
         function copiarLink(url, nome) {
@@ -1079,10 +1208,10 @@
                 
                 sugestoes.forEach((sugestao, index) => {
                     const item = document.createElement('div');
-                    item.className = 'suggestion-item';
+                    item.className = 'friend-suggestion-item';
                     item.innerHTML = `
-                        <div class="suggestion-number">${index + 1}</div>
-                        <div class="suggestion-text">${sugestao.sugestao}</div>
+                        <div class="friend-suggestion-number">${index + 1}</div>
+                        <div class="friend-suggestion-text">${sugestao.sugestao}</div>
                     `;
                     suggestionsList.appendChild(item);
                 });
@@ -1129,33 +1258,33 @@
         
         // CRIAR EFEITOS NATALINOS
         function criarEfeitosNatalinos() {
-            const snowflakes = document.getElementById('snowflakes');
-            
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.style.position = 'fixed';
-                confetti.style.width = '10px';
-                confetti.style.height = '10px';
-                confetti.style.backgroundColor = ['#b8860b', '#2e8b57', '#b22222'][Math.floor(Math.random() * 3)];
-                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.top = '-20px';
-                confetti.style.opacity = '0.9';
-                confetti.style.zIndex = '9999';
-                
-                document.body.appendChild(confetti);
-                
-                const animation = confetti.animate([
-                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-                    { transform: `translateY(${window.innerHeight + 20}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
-                ], {
-                    duration: Math.random() * 3000 + 2000,
-                    easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
-                });
-                
-                animation.onfinish = () => {
-                    confetti.remove();
-                };
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.width = '8px';
+                    confetti.style.height = '8px';
+                    confetti.style.backgroundColor = ['#b8860b', '#2e8b57', '#b22222'][Math.floor(Math.random() * 3)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-10px';
+                    confetti.style.opacity = '0.9';
+                    confetti.style.zIndex = '9999';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    const animation = confetti.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                        { transform: `translateY(${window.innerHeight + 20}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                    ], {
+                        duration: Math.random() * 2000 + 1000,
+                        easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+                    });
+                    
+                    animation.onfinish = () => {
+                        confetti.remove();
+                    };
+                }, i * 100);
             }
         }
         
@@ -1183,7 +1312,6 @@
         }
         
         function animateSnowflake(snowflake) {
-            const startLeft = parseFloat(snowflake.style.left);
             const amplitude = Math.random() * 30 + 10;
             const duration = Math.random() * 10 + 15;
             const delay = Math.random() * 5;
@@ -1209,9 +1337,6 @@
         // INICIALIZAÇÃO
         async function init() {
             criarFlocosDeNeve();
-            
-            // Adicionar um campo de sugestão inicial
-            adicionarSugestaoInput();
             
             const isParticipante = await verificarParticipante();
             
