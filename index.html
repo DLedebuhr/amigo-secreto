@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amigo Secreto - Edição Natalina</title>
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -130,7 +129,6 @@
             box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.2);
         }
         
-      
         .btn {
             display: inline-block;
             padding: 15px 35px;
@@ -166,7 +164,6 @@
             border-color: #d4af37;
         }
         
-      
         .participant-list {
             margin: 25px 0;
         }
@@ -214,7 +211,6 @@
             background: rgba(46, 139, 87, 0.1);
         }
         
-        /* Links elegantes */
         .link-box {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -241,7 +237,6 @@
             text-decoration: underline;
         }
         
-        /* Tela de resultado elegante */
         .result-screen {
             text-align: center;
             padding: 60px 40px;
@@ -282,7 +277,6 @@
             100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); }
         }
         
-        /* Mensagens */
         .message {
             padding: 15px 20px;
             margin: 20px 0;
@@ -307,7 +301,6 @@
             display: block;
         }
         
-        /* Utilitários */
         .hidden {
             display: none;
         }
@@ -321,7 +314,6 @@
             font-size: 0.9rem;
         }
         
-        /* Footer elegante */
         .footer {
             text-align: center;
             margin-top: 60px;
@@ -333,7 +325,6 @@
             backdrop-filter: blur(5px);
         }
         
-        /* Decorações natalinas sutis */
         .christmas-divider {
             height: 1px;
             background: linear-gradient(90deg, 
@@ -345,7 +336,6 @@
             margin: 30px 0;
         }
         
-        /* Efeitos de neve */
         .snowflakes {
             position: fixed;
             top: 0;
@@ -363,7 +353,103 @@
             opacity: 0.8;
         }
         
-        /* Responsividade */
+        /* Novos estilos para sugestões de presentes */
+        .gift-suggestions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 5px;
+        }
+        
+        .suggestion-number {
+            background: rgba(184, 134, 11, 0.2);
+            color: #b8860b;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+        }
+        
+        .suggestion-text {
+            flex: 1;
+            color: #e8e6e3;
+        }
+        
+        .suggestions-title {
+            color: #b8860b;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(184, 134, 11, 0.3);
+        }
+        
+        .suggestions-box {
+            background: rgba(184, 134, 11, 0.1);
+            border: 1px solid rgba(184, 134, 11, 0.2);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .suggestion-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .suggestion-input {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: #fff;
+            font-size: 0.95rem;
+        }
+        
+        .remove-suggestion {
+            background: rgba(178, 34, 34, 0.2);
+            color: #b22222;
+            border: 1px solid rgba(178, 34, 34, 0.3);
+            border-radius: 5px;
+            padding: 0 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .remove-suggestion:hover {
+            background: rgba(178, 34, 34, 0.3);
+        }
+        
+        .add-suggestion-btn {
+            background: rgba(46, 139, 87, 0.2);
+            color: #2e8b57;
+            border: 1px solid rgba(46, 139, 87, 0.3);
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .add-suggestion-btn:hover {
+            background: rgba(46, 139, 87, 0.3);
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 20px 15px;
@@ -386,17 +472,19 @@
                 padding: 12px 25px;
                 width: 100%;
             }
+            
+            .suggestion-input-group {
+                flex-direction: column;
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Efeito de neve -->
     <div class="snowflakes" id="snowflakes"></div>
     
     <div class="container">
-        <!-- Cabeçalho -->
         <header class="header">
             <h1 class="site-title">- AMIGO SECRETO -</h1>
             <div class="site-subtitle">Edição Natalina</div>
@@ -406,7 +494,6 @@
             </p>
         </header>
         
-        <!-- Mensagens do sistema -->
         <div id="message" class="message"></div>
         
         <!-- Tela 1: Criar Sorteio -->
@@ -432,6 +519,17 @@
             <div class="form-group">
                 <label class="form-label">Adicionar Participante</label>
                 <input type="text" id="participante-nome" class="form-input" placeholder="Nome do participante">
+            </div>
+            
+            <!-- Adicionar sugestões de presentes -->
+            <div class="form-group" id="sugestoes-container" style="display: none;">
+                <label class="form-label">Sugestões de Presente (opcional)</label>
+                <div id="sugestoes-inputs">
+                    <!-- Inputs serão gerados aqui -->
+                </div>
+                <button type="button" class="add-suggestion-btn" onclick="adicionarSugestaoInput()" style="margin-top: 10px;">
+                    <i class="fas fa-plus"></i> Adicionar Sugestão
+                </button>
             </div>
             
             <button class="btn" onclick="adicionarParticipante()" style="width: 100%;">
@@ -472,6 +570,7 @@
                 </p>
             </div>
             
+            <!-- Se o participante ainda não sorteou -->
             <div id="participant-draw" class="hidden">
                 <div class="text-center" style="margin: 30px 0;">
                     <p style="color: #ccc; margin-bottom: 20px;">
@@ -481,6 +580,19 @@
                 
                 <button class="btn btn-primary" onclick="realizarSorteio()" style="width: 100%;">
                     <i class="fas fa-gift"></i> Revelar Amigo Secreto
+                </button>
+            </div>
+            
+            <!-- Se o participante já sorteou -->
+            <div id="participant-result" class="hidden">
+                <div class="text-center" style="margin: 30px 0;">
+                    <p style="color: #ccc; margin-bottom: 20px;">
+                        Clique no botão abaixo para ver seu Amigo Secreto novamente.
+                    </p>
+                </div>
+                
+                <button class="btn btn-primary" onclick="verResultadoNovamente()" style="width: 100%;">
+                    <i class="fas fa-eye"></i> Ver Amigo Secreto
                 </button>
             </div>
         </div>
@@ -494,6 +606,19 @@
             <div class="secret-name" id="secret-friend-name"></div>
             
             <div class="christmas-divider"></div>
+            
+            <!-- Sugestões de presentes do amigo sorteado -->
+            <div id="friend-suggestions" class="gift-suggestions" style="display: none;">
+                <h3 class="suggestions-title">
+                    <i class="fas fa-lightbulb"></i> Sugestões de Presente do(a) <span id="friend-name"></span>
+                </h3>
+                <div id="suggestions-list">
+                    <!-- Sugestões serão inseridas aqui -->
+                </div>
+                <p style="color: #aaa; font-size: 0.9rem; margin-top: 15px; font-style: italic;">
+                    Estas são sugestões feitas pelo seu amigo secreto. Use como inspiração!
+                </p>
+            </div>
             
             <p style="color: #aaa; margin: 30px 0; font-style: italic;">
                 Esta informação é confidencial. Por favor, mantenha em segredo até a troca de presentes.
@@ -509,7 +634,6 @@
             </div>
         </div>
         
-        <!-- Footer -->
         <footer class="footer">
             <p>Amigo Secreto &copy; 2025 - Troca de Presentes Natalina</p>
             <p style="margin-top: 10px; font-size: 0.8rem; color: #888;">
@@ -518,12 +642,11 @@
         </footer>
     </div>
 
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
         // CONFIGURAÇÃO SUPABASE
-const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
+        const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_9sSZQCTFdzvYQwO3l10HOA_Hu7PEaLe';
         
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -533,7 +656,8 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
             sorteio: null,
             participante: null,
             participantes: [],
-            isOrganizador: false
+            isOrganizador: false,
+            sugestoesTemp: []
         };
         
         // Mostrar mensagem
@@ -594,12 +718,50 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
                 mostrarTela('screen-organizer');
                 mostrarMensagem('Sorteio criado com sucesso!');
                 
+                // Mostrar campo de sugestões
+                document.getElementById('sugestoes-container').style.display = 'block';
+                
             } catch (error) {
                 mostrarErro('Erro: ' + error.message);
             }
         }
         
-        // 2. ADICIONAR PARTICIPANTE
+        // Gerenciar sugestões de presentes
+        function adicionarSugestaoInput() {
+            const container = document.getElementById('sugestoes-inputs');
+            const index = container.children.length;
+            
+            const div = document.createElement('div');
+            div.className = 'suggestion-input-group';
+            div.innerHTML = `
+                <input type="text" class="suggestion-input" 
+                       placeholder="Sugestão ${index + 1} (ex: Livro, Perfume, Camiseta)" 
+                       id="sugestao-${index}">
+                <button type="button" class="remove-suggestion" onclick="removerSugestaoInput(this)">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(div);
+            
+            estado.sugestoesTemp.push('');
+        }
+        
+        function removerSugestaoInput(button) {
+            const div = button.parentElement;
+            div.remove();
+            
+            // Atualizar índices
+            atualizarIndicesSugestoes();
+        }
+        
+        function atualizarIndicesSugestoes() {
+            const inputs = document.querySelectorAll('.suggestion-input');
+            inputs.forEach((input, index) => {
+                input.placeholder = `Sugestão ${index + 1} (ex: Livro, Perfume, Camiseta)`;
+            });
+        }
+        
+        // 2. ADICIONAR PARTICIPANTE COM SUGESTÕES
         async function adicionarParticipante() {
             const nome = document.getElementById('participante-nome').value.trim();
             
@@ -608,7 +770,14 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
                 return;
             }
             
+            // Coletar sugestões
+            const sugestoesInputs = document.querySelectorAll('.suggestion-input');
+            const sugestoes = Array.from(sugestoesInputs)
+                .map(input => input.value.trim())
+                .filter(sugestao => sugestao.length > 0);
+            
             try {
+                // Primeiro, criar o participante
                 const { data, error } = await supabase
                     .from('participantes')
                     .insert([{
@@ -617,7 +786,7 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
                         ja_sorteou: false,
                         ja_foi_sorteado: false,
                         sorteado: false,
-                        codigo_pessoal: Math.random().toString(36).substring(2, 10) // Adicione esta linha
+                        codigo_pessoal: Math.random().toString(36).substring(2, 10)
                     }])
                     .select()
                     .single();
@@ -627,9 +796,26 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
                     return;
                 }
                 
+                // Se houver sugestões, adicioná-las
+                if (sugestoes.length > 0) {
+                    for (const sugestao of sugestoes) {
+                        await supabase
+                            .from('sugestoes_presentes')
+                            .insert([{
+                                participante_id: data.id,
+                                sugestao: sugestao,
+                                sorteio_id: estado.sorteio.id
+                            }]);
+                    }
+                }
+                
+                // Limpar formulário
                 document.getElementById('participante-nome').value = '';
+                document.getElementById('sugestoes-inputs').innerHTML = '';
+                estado.sugestoesTemp = [];
+                
                 await carregarParticipantes();
-                mostrarMensagem(`${nome} adicionado com sucesso!`);
+                mostrarMensagem(`${nome} adicionado com sucesso! ${sugestoes.length > 0 ? 'Sugestões salvas!' : ''}`);
                 
             } catch (error) {
                 mostrarErro('Erro: ' + error.message);
@@ -667,15 +853,28 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
                 return;
             }
             
-            estado.participantes.forEach(p => {
+            estado.participantes.forEach(async (p) => {
                 const div = document.createElement('div');
                 div.className = 'participant-item';
                 
+                // Buscar sugestões do participante
+                const { data: sugestoes } = await supabase
+                    .from('sugestoes_presentes')
+                    .select('sugestao')
+                    .eq('participante_id', p.id);
+                
                 const statusClass = p.ja_sorteou ? 'status-done' : 'status-waiting';
-                const statusText = p.ja_sorteou ? `Sorteado (${p.tirou})` : 'Aguardando';
+                const statusText = p.ja_sorteou ? `Sorteado` : 'Aguardando';
                 
                 div.innerHTML = `
-                    <div class="participant-name">${p.nome}</div>
+                    <div style="flex: 1;">
+                        <div class="participant-name">${p.nome}</div>
+                        ${sugestoes && sugestoes.length > 0 ? 
+                            `<div style="font-size: 0.8rem; color: #b8860b; margin-top: 5px;">
+                                <i class="fas fa-gift"></i> ${sugestoes.length} sugestão(ões)
+                            </div>` : ''
+                        }
+                    </div>
                     <div class="participant-status ${statusClass}">${statusText}</div>
                 `;
                 container.appendChild(div);
@@ -718,7 +917,6 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
             mostrarMensagem('Links gerados com sucesso!');
         }
         
-        // Função para copiar link
         function copiarLink(url, nome) {
             navigator.clipboard.writeText(url).then(() => {
                 mostrarMensagem(`Link de ${nome} copiado!`, 'success');
@@ -774,8 +972,10 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
                 
                 if (!estado.participante.ja_sorteou) {
                     document.getElementById('participant-draw').classList.remove('hidden');
+                    document.getElementById('participant-result').classList.add('hidden');
                 } else {
-                    mostrarResultado(estado.participante.tirou);
+                    document.getElementById('participant-draw').classList.add('hidden');
+                    document.getElementById('participant-result').classList.remove('hidden');
                 }
                 
                 return true;
@@ -791,7 +991,7 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
             try {
                 // Verificar se já sorteou
                 if (estado.participante.ja_sorteou) {
-                    mostrarResultado(estado.participante.tirou);
+                    await verResultadoNovamente();
                     return;
                 }
                 
@@ -849,9 +1049,9 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
                 // Criar efeitos visuais
                 criarEfeitosNatalinos();
                 
-                // Mostrar resultado
-                setTimeout(() => {
-                    mostrarResultado(amigoSorteado.nome);
+                // Mostrar resultado com sugestões
+                setTimeout(async () => {
+                    await mostrarResultadoCompleto(amigoSorteado);
                     mostrarMensagem('Amigo secreto revelado com sucesso!');
                 }, 500);
                 
@@ -860,9 +1060,65 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
             }
         }
         
-        // MOSTRAR RESULTADO
+        // MOSTRAR RESULTADO COM SUGESTÕES
+        async function mostrarResultadoCompleto(amigoSorteado) {
+            document.getElementById('secret-friend-name').textContent = amigoSorteado.nome;
+            document.getElementById('friend-name').textContent = amigoSorteado.nome;
+            
+            // Buscar sugestões do amigo sorteado
+            const { data: sugestoes } = await supabase
+                .from('sugestoes_presentes')
+                .select('sugestao')
+                .eq('participante_id', amigoSorteado.id);
+            
+            const suggestionsList = document.getElementById('suggestions-list');
+            suggestionsList.innerHTML = '';
+            
+            if (sugestoes && sugestoes.length > 0) {
+                document.getElementById('friend-suggestions').style.display = 'block';
+                
+                sugestoes.forEach((sugestao, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'suggestion-item';
+                    item.innerHTML = `
+                        <div class="suggestion-number">${index + 1}</div>
+                        <div class="suggestion-text">${sugestao.sugestao}</div>
+                    `;
+                    suggestionsList.appendChild(item);
+                });
+            } else {
+                document.getElementById('friend-suggestions').style.display = 'none';
+            }
+            
+            mostrarTela('screen-result');
+        }
+        
+        // VER RESULTADO NOVAMENTE
+        async function verResultadoNovamente() {
+            if (!estado.participante.tirou) {
+                mostrarErro('Você ainda não sorteou');
+                return;
+            }
+            
+            // Buscar o amigo sorteado pelo nome
+            const { data: amigoSorteado } = await supabase
+                .from('participantes')
+                .select('*')
+                .eq('sorteio_id', estado.sorteio.id)
+                .eq('nome', estado.participante.tirou)
+                .single();
+            
+            if (amigoSorteado) {
+                await mostrarResultadoCompleto(amigoSorteado);
+            } else {
+                mostrarResultado(estado.participante.tirou);
+            }
+        }
+        
+        // FUNÇÃO SIMPLIFICADA PARA MOSTRAR APENAS NOME
         function mostrarResultado(nome) {
             document.getElementById('secret-friend-name').textContent = nome;
+            document.getElementById('friend-suggestions').style.display = 'none';
             mostrarTela('screen-result');
         }
         
@@ -875,7 +1131,6 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
         function criarEfeitosNatalinos() {
             const snowflakes = document.getElementById('snowflakes');
             
-            // Criar confete
             for (let i = 0; i < 50; i++) {
                 const confetti = document.createElement('div');
                 confetti.style.position = 'fixed';
@@ -890,7 +1145,6 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
                 
                 document.body.appendChild(confetti);
                 
-                // Animar confete
                 const animation = confetti.animate([
                     { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
                     { transform: `translateY(${window.innerHeight + 20}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
@@ -899,7 +1153,6 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
                     easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
                 });
                 
-                // Remover após animação
                 animation.onfinish = () => {
                     confetti.remove();
                 };
@@ -915,21 +1168,16 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
                 const snowflake = document.createElement('div');
                 snowflake.className = 'snowflake';
                 
-                // Tamanho aleatório
                 const size = Math.random() * 5 + 3;
                 snowflake.style.width = `${size}px`;
                 snowflake.style.height = `${size}px`;
                 
-                // Posição inicial aleatória
                 snowflake.style.left = `${Math.random() * 100}%`;
                 snowflake.style.top = `${Math.random() * 100}%`;
                 
-                // Opacidade aleatória
                 snowflake.style.opacity = Math.random() * 0.6 + 0.3;
                 
                 snowflakesContainer.appendChild(snowflake);
-                
-                // Animar floco de neve
                 animateSnowflake(snowflake);
             }
         }
@@ -960,10 +1208,11 @@ const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
         
         // INICIALIZAÇÃO
         async function init() {
-            // Criar flocos de neve
             criarFlocosDeNeve();
             
-            // Verificar se é participante
+            // Adicionar um campo de sugestão inicial
+            adicionarSugestaoInput();
+            
             const isParticipante = await verificarParticipante();
             
             if (!isParticipante) {
