@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amigo Secreto - Edição Natalina</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: 
+                linear-gradient(rgba(10, 26, 21, 0.85), rgba(26, 44, 37, 0.9)),
+                url('https://images.unsplash.com/photo-1512389142860-9c449e58a543?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #e8e6e3;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .site-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #fff;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .site-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 25%;
+            width: 50%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #b8860b, transparent);
+        }
+        
+        .site-subtitle {
+            font-size: 1rem;
+            color: #aaa;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(184, 134, 11, 0.3);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            padding-top: 60px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Georgia', serif;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #b8860b;
+            background: rgba(184, 134, 11, 0.1);
+            box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.2);
+        }
+        
+      
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: transparent;
+            color: #b8860b;
+            border: 1px solid #b8860b;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'Georgia', serif;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .btn:hover {
+            background: rgba(184, 134, 11, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.2);
+        }
+        
+        .btn-primary {
+            background: rgba(184, 134, 11, 0.9);
+            color: #0a1a15;
+            font-weight: bold;
+        }
+        
+        .btn-primary:hover {
+            background: rgba(212, 175, 55, 0.9);
+            border-color: #d4af37;
+        }
+        
+      
+        .participant-list {
+            margin: 25px 0;
+        }
+        
+        .participant-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 5px;
+            margin-bottom: 8px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .participant-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(5px);
+        }
+        
+        .participant-name {
+            font-size: 1.1rem;
+            color: #fff;
+        }
+        
+        .participant-status {
+            font-size: 0.85rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .status-waiting {
+            color: #b8860b;
+            border: 1px solid #b8860b;
+            background: rgba(184, 134, 11, 0.1);
+        }
+        
+        .status-done {
+            color: #2e8b57;
+            border: 1px solid #2e8b57;
+            background: rgba(46, 139, 87, 0.1);
+        }
+        
+        /* Links elegantes */
+        .link-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .link-box:hover {
+            border-color: rgba(184, 134, 11, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .link-box a {
+            color: #b8860b;
+            text-decoration: none;
+            word-break: break-all;
+            font-size: 0.9rem;
+        }
+        
+        .link-box a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Tela de resultado elegante */
+        .result-screen {
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .result-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+        
+        .secret-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: #b8860b;
+            margin: 30px 0;
+            letter-spacing: 2px;
+            padding: 30px;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            background: rgba(184, 134, 11, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(184, 134, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); }
+        }
+        
+        /* Mensagens */
+        .message {
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+            border-left: 4px solid;
+            backdrop-filter: blur(10px);
+        }
+        
+        .message-success {
+            background: rgba(46, 139, 87, 0.15);
+            border-color: #cacaca;
+            color: #cacaca;
+            display: block;
+        }
+        
+        .message-error {
+            background: rgba(178, 34, 34, 0.15);
+            border-color: #cacaca;
+            color: #cacaca;
+            display: block;
+        }
+        
+        /* Utilitários */
+        .hidden {
+            display: none;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-muted {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Footer elegante */
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Decorações natalinas sutis */
+        .christmas-divider {
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(184, 134, 11, 0.5), 
+                rgba(46, 139, 87, 0.5), 
+                rgba(178, 34, 34, 0.5), 
+                transparent);
+            margin: 30px 0;
+        }
+        
+        /* Efeitos de neve */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .snowflake {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .site-title {
+                font-size: 2.2rem;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .secret-name {
+                font-size: 2.5rem;
+                padding: 15px;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                width: 100%;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Efeito de neve -->
+    <div class="snowflakes" id="snowflakes"></div>
+    
+    <div class="container">
+        <!-- Cabeçalho -->
+        <header class="header">
+            <h1 class="site-title">- AMIGO SECRETO -</h1>
+            <div class="site-subtitle">Edição Natalina</div>
+            <div class="christmas-divider"></div>
+            <p style="color: #ccc; margin-top: 20px; font-size: 1.1rem;">
+                > - <
+            </p>
+        </header>
+        
+        <!-- Mensagens do sistema -->
+        <div id="message" class="message"></div>
+        
+        <!-- Tela 1: Criar Sorteio -->
+        <div id="screen-create" class="card">
+            <h2 class="section-title">Criar Novo Sorteio</h2>
+            <div class="form-group">
+                <label class="form-label">Nome do Sorteio</label>
+                <input type="text" id="sorteio-nome" class="form-input" placeholder="Natal da Família 2025">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Código Secreto</label>
+                <input type="text" id="sorteio-codigo" class="form-input" placeholder="FAMILIA2025 (sem espaços)">
+            </div>
+            <button class="btn btn-primary" onclick="criarSorteio()" style="width: 100%;">
+                <i class="fas fa-plus-circle"></i> Criar Sorteio
+            </button>
+        </div>
+        
+        <!-- Tela 2: Organizador -->
+        <div id="screen-organizer" class="card hidden">
+            <h2 class="section-title">Organizando: <span id="sorteio-nome-display" style="color: #b8860b;"></span></h2>
+            
+            <div class="form-group">
+                <label class="form-label">Adicionar Participante</label>
+                <input type="text" id="participante-nome" class="form-input" placeholder="Nome do participante">
+            </div>
+            
+            <button class="btn" onclick="adicionarParticipante()" style="width: 100%;">
+                <i class="fas fa-user-plus"></i> Adicionar à Lista
+            </button>
+            
+            <h3 class="section-title">Participantes (<span id="participant-count">0</span>)</h3>
+            
+            <div class="participant-list" id="participant-list">
+                <p class="text-center text-muted">Nenhum participante ainda. Adicione o primeiro.</p>
+            </div>
+            
+            <div class="christmas-divider"></div>
+            
+            <button class="btn btn-primary" onclick="gerarLinks()" style="width: 100%;">
+                <i class="fas fa-link"></i> Gerar Links Individuais
+            </button>
+            
+            <div id="links-container" class="hidden">
+                <h3 class="section-title">Links Pessoais</h3>
+                <p class="text-muted" style="margin-bottom: 20px;">
+                    Envie cada link para o participante correspondente.
+                </p>
+                <div id="links-list"></div>
+            </div>
+        </div>
+        
+        <!-- Tela 3: Participante -->
+        <div id="screen-participant" class="card hidden">
+            <h2 class="section-title"><span id="participant-sorteio-name"></span></h2>
+            
+            <div id="participant-info">
+                <h3 style="font-size: 1.4rem; color: #ccc; margin-bottom: 20px;">
+                    Bem-vindo(a), <span id="participant-name" style="color: #b8860b;"></span>
+                </h3>
+                <p style="color: #aaa; margin-bottom: 30px; font-style: italic;">
+                    Você está participando do nosso amigo secreto natalino.
+                </p>
+            </div>
+            
+            <div id="participant-draw" class="hidden">
+                <div class="text-center" style="margin: 30px 0;">
+                    <p style="color: #ccc; margin-bottom: 20px;">
+                        Clique no botão abaixo para descobrir seu Amigo Secreto.
+                    </p>
+                </div>
+                
+                <button class="btn btn-primary" onclick="realizarSorteio()" style="width: 100%;">
+                    <i class="fas fa-gift"></i> Revelar Amigo Secreto
+                </button>
+            </div>
+        </div>
+        
+        <!-- Tela 4: Resultado -->
+        <div id="screen-result" class="result-screen hidden">
+            <h2 class="result-title"> Seu Amigo Secreto é </h2>
+            
+            <div class="christmas-divider"></div>
+            
+            <div class="secret-name" id="secret-friend-name"></div>
+            
+            <div class="christmas-divider"></div>
+            
+            <p style="color: #aaa; margin: 30px 0; font-style: italic;">
+                Esta informação é confidencial. Por favor, mantenha em segredo até a troca de presentes.
+            </p>
+            
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn" onclick="window.print()">
+                    <i class="fas fa-print"></i> Imprimir
+                </button>
+                <button class="btn" onclick="inicio()">
+                    <i class="fas fa-home"></i> Voltar ao Início
+                </button>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Amigo Secreto &copy; 2025 - Troca de Presentes Natalina</p>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: #888;">
+                Por DLedebuhr
+            </p>
+        </footer>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+        // CONFIGURAÇÃO SUPABASE
+const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_9sSZQCTFdzvYQwO3l10HOA_Hu7PEaLe';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // Estado da aplicação
+        let estado = {
+            sorteio: null,
+            participante: null,
+            participantes: [],
+            isOrganizador: false
+        };
+        
+        // Mostrar mensagem
+        function mostrarMensagem(texto, tipo = 'success') {
+            const el = document.getElementById('message');
+            el.textContent = texto;
+            el.className = `message message-${tipo}`;
+            setTimeout(() => el.className = 'message', 5000);
+        }
+        
+        function mostrarErro(texto) {
+            mostrarMensagem(texto, 'error');
+        }
+        
+        // Alternar entre telas
+        function mostrarTela(id) {
+            ['screen-create', 'screen-organizer', 'screen-participant', 'screen-result'].forEach(screen => {
+                document.getElementById(screen).classList.add('hidden');
+            });
+            document.getElementById(id).classList.remove('hidden');
+        }
+        
+        // 1. CRIAR SORTEIO
+        async function criarSorteio() {
+            const nome = document.getElementById('sorteio-nome').value.trim();
+            const codigo = document.getElementById('sorteio-codigo').value.trim().toUpperCase();
+            
+            if (!nome || !codigo) {
+                mostrarErro('Por favor, preencha todos os campos');
+                return;
+            }
+            
+            if (codigo.includes(' ')) {
+                mostrarErro('O código não pode conter espaços');
+                return;
+            }
+            
+            try {
+                const { data, error } = await supabase
+                    .from('sorteios')
+                    .insert([{ nome, codigo }])
+                    .select()
+                    .single();
+                
+                if (error) {
+                    if (error.code === '23505') {
+                        mostrarErro('Este código já existe. Por favor, use um diferente.');
+                    } else {
+                        mostrarErro('Erro: ' + error.message);
+                    }
+                    return;
+                }
+                
+                estado.sorteio = data;
+                estado.isOrganizador = true;
+                
+                document.getElementById('sorteio-nome-display').textContent = nome;
+                mostrarTela('screen-organizer');
+                mostrarMensagem('Sorteio criado com sucesso!');
+                
+            } catch (error) {
+                mostrarErro('Erro: ' + error.message);
+            }
+        }
+        
+        // 2. ADICIONAR PARTICIPANTE
+        async function adicionarParticipante() {
+            const nome = document.getElementById('participante-nome').value.trim();
+            
+            if (!nome) {
+                mostrarErro('Por favor, digite um nome');
+                return;
+            }
+            
+            try {
+                const { data, error } = await supabase
+                    .from('participantes')
+                    .insert([{
+                        sorteio_id: estado.sorteio.id,
+                        nome,
+                        ja_sorteou: false,
+                        ja_foi_sorteado: false,
+                        sorteado: false,
+                        codigo_pessoal: Math.random().toString(36).substring(2, 10) // Adicione esta linha
+                    }])
+                    .select()
+                    .single();
+                
+                if (error) {
+                    mostrarErro('Erro: ' + error.message);
+                    return;
+                }
+                
+                document.getElementById('participante-nome').value = '';
+                await carregarParticipantes();
+                mostrarMensagem(`${nome} adicionado com sucesso!`);
+                
+            } catch (error) {
+                mostrarErro('Erro: ' + error.message);
+            }
+        }
+        
+        // 3. CARREGAR PARTICIPANTES
+        async function carregarParticipantes() {
+            try {
+                const { data, error } = await supabase
+                    .from('participantes')
+                    .select('*')
+                    .eq('sorteio_id', estado.sorteio.id)
+                    .order('nome');
+                
+                if (error) throw error;
+                
+                estado.participantes = data || [];
+                atualizarListaParticipantes();
+                
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+        }
+        
+        function atualizarListaParticipantes() {
+            const container = document.getElementById('participant-list');
+            const count = document.getElementById('participant-count');
+            
+            container.innerHTML = '';
+            count.textContent = estado.participantes.length;
+            
+            if (estado.participantes.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted">Nenhum participante ainda. Adicione o primeiro.</p>';
+                return;
+            }
+            
+            estado.participantes.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'participant-item';
+                
+                const statusClass = p.ja_sorteou ? 'status-done' : 'status-waiting';
+                const statusText = p.ja_sorteou ? `Sorteado (${p.tirou})` : 'Aguardando';
+                
+                div.innerHTML = `
+                    <div class="participant-name">${p.nome}</div>
+                    <div class="participant-status ${statusClass}">${statusText}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        
+        // 4. GERAR LINKS
+        async function gerarLinks() {
+            if (estado.participantes.length < 2) {
+                mostrarErro('Adicione pelo menos 2 participantes');
+                return;
+            }
+            
+            const container = document.getElementById('links-list');
+            container.innerHTML = '';
+            
+            estado.participantes.forEach(p => {
+                const url = `${window.location.origin}${window.location.pathname}?sorteio=${estado.sorteio.codigo}&participante=${encodeURIComponent(p.nome)}`;
+                
+                const linkBox = document.createElement('div');
+                linkBox.className = 'link-box';
+                linkBox.innerHTML = `
+                    <div style="margin-bottom: 10px;">
+                        <strong style="color: #fff;">${p.nome}</strong>
+                        <i class="fas fa-copy" style="float: right; color: #b8860b; cursor: pointer;" 
+                           onclick="copiarLink('${url}', '${p.nome}')" 
+                           title="Copiar link"></i>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <a href="${url}">${url}</a>
+                    </div>
+                    <div class="text-muted" style="font-size: 0.85rem;">
+                        Envie este link para ${p.nome}
+                    </div>
+                `;
+                container.appendChild(linkBox);
+            });
+            
+            document.getElementById('links-container').classList.remove('hidden');
+            mostrarMensagem('Links gerados com sucesso!');
+        }
+        
+        // Função para copiar link
+        function copiarLink(url, nome) {
+            navigator.clipboard.writeText(url).then(() => {
+                mostrarMensagem(`Link de ${nome} copiado!`, 'success');
+            }).catch(err => {
+                mostrarErro('Erro ao copiar link');
+            });
+        }
+        
+        // 5. VERIFICAR SE É PARTICIPANTE
+        async function verificarParticipante() {
+            const params = new URLSearchParams(window.location.search);
+            const codigoSorteio = params.get('sorteio');
+            const nomeParticipante = params.get('participante');
+            
+            if (!codigoSorteio || !nomeParticipante) {
+                return false;
+            }
+            
+            try {
+                // Buscar sorteio
+                const { data: sorteioData, error: sorteioError } = await supabase
+                    .from('sorteios')
+                    .select('*')
+                    .eq('codigo', codigoSorteio.toUpperCase())
+                    .single();
+                
+                if (sorteioError) {
+                    mostrarErro('Sorteio não encontrado');
+                    return false;
+                }
+                
+                estado.sorteio = sorteioData;
+                
+                // Buscar participante
+                const { data: participanteData, error: participanteError } = await supabase
+                    .from('participantes')
+                    .select('*')
+                    .eq('sorteio_id', estado.sorteio.id)
+                    .eq('nome', decodeURIComponent(nomeParticipante))
+                    .single();
+                
+                if (participanteError) {
+                    mostrarErro('Você não está na lista deste sorteio');
+                    return false;
+                }
+                
+                estado.participante = participanteData;
+                
+                // Mostrar tela do participante
+                mostrarTela('screen-participant');
+                document.getElementById('participant-sorteio-name').textContent = estado.sorteio.nome;
+                document.getElementById('participant-name').textContent = estado.participante.nome;
+                
+                if (!estado.participante.ja_sorteou) {
+                    document.getElementById('participant-draw').classList.remove('hidden');
+                } else {
+                    mostrarResultado(estado.participante.tirou);
+                }
+                
+                return true;
+                
+            } catch (error) {
+                mostrarErro('Erro: ' + error.message);
+                return false;
+            }
+        }
+        
+        // 6. REALIZAR SORTEIO
+        async function realizarSorteio() {
+            try {
+                // Verificar se já sorteou
+                if (estado.participante.ja_sorteou) {
+                    mostrarResultado(estado.participante.tirou);
+                    return;
+                }
+                
+                // Buscar todos os participantes
+                const { data: todosParticipantes, error } = await supabase
+                    .from('participantes')
+                    .select('*')
+                    .eq('sorteio_id', estado.sorteio.id);
+                
+                if (error) throw error;
+                
+                // Filtrar possíveis amigos (não pode ser ele mesmo)
+                let possiveis = todosParticipantes.filter(p => p.id !== estado.participante.id);
+                
+                // Priorizar quem ainda não foi sorteado
+                const naoSorteadoAinda = possiveis.filter(p => !p.ja_foi_sorteado);
+                if (naoSorteadoAinda.length > 0) {
+                    possiveis = naoSorteadoAinda;
+                }
+                
+                if (possiveis.length === 0) {
+                    mostrarErro('Não há participantes disponíveis');
+                    return;
+                }
+                
+                // Sortear aleatoriamente
+                const amigoSorteado = possiveis[Math.floor(Math.random() * possiveis.length)];
+                
+                // Atualizar no banco
+                const { error: error1 } = await supabase
+                    .from('participantes')
+                    .update({
+                        ja_sorteou: true,
+                        tirou: amigoSorteado.nome,
+                        sorteado: true
+                    })
+                    .eq('id', estado.participante.id);
+                
+                if (error1) throw error1;
+                
+                // Marcar o amigo sorteado como "já foi sorteado"
+                const { error: error2 } = await supabase
+                    .from('participantes')
+                    .update({
+                        ja_foi_sorteado: true
+                    })
+                    .eq('id', amigoSorteado.id);
+                
+                if (error2) throw error2;
+                
+                // Atualizar estado local
+                estado.participante.ja_sorteou = true;
+                estado.participante.tirou = amigoSorteado.nome;
+                
+                // Criar efeitos visuais
+                criarEfeitosNatalinos();
+                
+                // Mostrar resultado
+                setTimeout(() => {
+                    mostrarResultado(amigoSorteado.nome);
+                    mostrarMensagem('Amigo secreto revelado com sucesso!');
+                }, 500);
+                
+            } catch (error) {
+                mostrarErro('Erro: ' + error.message);
+            }
+        }
+        
+        // MOSTRAR RESULTADO
+        function mostrarResultado(nome) {
+            document.getElementById('secret-friend-name').textContent = nome;
+            mostrarTela('screen-result');
+        }
+        
+        // FUNÇÃO PARA VOLTAR AO INÍCIO
+        function inicio() {
+            window.location.href = window.location.pathname;
+        }
+        
+        // CRIAR EFEITOS NATALINOS
+        function criarEfeitosNatalinos() {
+            const snowflakes = document.getElementById('snowflakes');
+            
+            // Criar confete
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = ['#b8860b', '#2e8b57', '#b22222'][Math.floor(Math.random() * 3)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                confetti.style.opacity = '0.9';
+                confetti.style.zIndex = '9999';
+                
+                document.body.appendChild(confetti);
+                
+                // Animar confete
+                const animation = confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight + 20}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+                });
+                
+                // Remover após animação
+                animation.onfinish = () => {
+                    confetti.remove();
+                };
+            }
+        }
+        
+        // CRIAR FLOCOS DE NEVE
+        function criarFlocosDeNeve() {
+            const snowflakesContainer = document.getElementById('snowflakes');
+            const snowflakeCount = 50;
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                
+                // Tamanho aleatório
+                const size = Math.random() * 5 + 3;
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                
+                // Posição inicial aleatória
+                snowflake.style.left = `${Math.random() * 100}%`;
+                snowflake.style.top = `${Math.random() * 100}%`;
+                
+                // Opacidade aleatória
+                snowflake.style.opacity = Math.random() * 0.6 + 0.3;
+                
+                snowflakesContainer.appendChild(snowflake);
+                
+                // Animar floco de neve
+                animateSnowflake(snowflake);
+            }
+        }
+        
+        function animateSnowflake(snowflake) {
+            const startLeft = parseFloat(snowflake.style.left);
+            const amplitude = Math.random() * 30 + 10;
+            const duration = Math.random() * 10 + 15;
+            const delay = Math.random() * 5;
+            
+            snowflake.style.animation = `fall ${duration}s linear ${delay}s infinite`;
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fall {
+                    0% {
+                        transform: translateY(-100px) translateX(0);
+                        opacity: ${snowflake.style.opacity};
+                    }
+                    100% {
+                        transform: translateY(100vh) translateX(${amplitude}px);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // INICIALIZAÇÃO
+        async function init() {
+            // Criar flocos de neve
+            criarFlocosDeNeve();
+            
+            // Verificar se é participante
+            const isParticipante = await verificarParticipante();
+            
+            if (!isParticipante) {
+                mostrarTela('screen-create');
+            }
+        }
+        
+        // Iniciar
+        window.onload = init;
+    </script>
+</body>
+</html>
