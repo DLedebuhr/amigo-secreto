@@ -600,7 +600,7 @@
             
             <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                 <button class="btn btn-primary" onclick="gerarLinks()" style="flex: 1;">
-                    <i class="fas fa-link"></i> Gerar Links Individuais
+                    <i class="fas fa-link"></i> Realizar Sorteio e Gerar Links
                 </button>
                 <button class="btn" onclick="limparFormulario()" style="flex: 1;">
                     <i class="fas fa-redo"></i> Limpar Formulário
@@ -608,9 +608,9 @@
             </div>
             
             <div id="links-container" class="hidden">
-                <h3 class="section-title">Links Pessoais</h3>
+                <h3 class="section-title">Sorteio Realizado!</h3>
                 <p class="text-muted" style="margin-bottom: 20px;">
-                    Envie cada link para o participante correspondente:
+                    O sorteio foi salvo no sistema. Envie cada link para o participante correspondente para que ele descubra quem tirou:
                 </p>
                 <div id="links-list"></div>
             </div>
@@ -624,7 +624,7 @@
                     Bem-vindo(a), <span id="participant-name" style="color: #b8860b;"></span>
                 </h3>
                 <p style="color: #aaa; margin-bottom: 30px; font-style: italic;">
-                    Você está participando do nosso amigo secreto natalino.
+                    Você está participando do nosso amigo secreto natalino. O sorteio já foi realizado!
                 </p>
             </div>
             
@@ -698,7 +698,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
-
         const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_9sSZQCTFdzvYQwO3l10HOA_Hu7PEaLe';
         
@@ -715,7 +714,11 @@
             const el = document.getElementById('message');
             el.textContent = texto;
             el.className = `message message-${tipo}`;
-            setTimeout(() => el.className = 'message', 5000);
+            el.style.display = 'block';
+            setTimeout(() => {
+                el.style.display = 'none';
+                el.className = 'message';
+            }, 5000);
         }
         
         function mostrarErro(texto) {
@@ -729,6 +732,10 @@
             document.getElementById(id).classList.remove('hidden');
         }
         
+        function inicio() {
+            window.location.href = window.location.pathname;
+        }
+
         async function criarSorteio() {
             const nome = document.getElementById('sorteio-nome').value.trim();
             const codigo = document.getElementById('sorteio-codigo').value.trim().toUpperCase();
@@ -864,6 +871,7 @@
                         ja_sorteou: false,
                         ja_foi_sorteado: false,
                         sorteado: false,
+                        amigo_secreto_id: null, // Ainda nulo
                         codigo_pessoal: Math.random().toString(36).substring(2, 10)
                     }])
                     .select()
@@ -930,7 +938,6 @@
             const container = document.getElementById('participant-list');
             const count = document.getElementById('participant-count');
             
-            container.innerHTML = '';
             count.textContent = estado.participantes.length;
             
             if (estado.participantes.length === 0) {
@@ -938,373 +945,272 @@
                 return;
             }
             
-            for (const p of estado.participantes) {
-                const { data: sugestoes } = await supabase
-                    .from('sugestoes_presentes')
-                    .select('sugestao')
-                    .eq('participante_id', p.id);
-                
-                const div = document.createElement('div');
-                div.className = 'participant-item';
-                
-                const statusClass = p.ja_sorteou ? 'status-done' : 'status-waiting';
-                const statusText = p.ja_sorteou ? `Sorteado` : 'Aguardando';
-                
-                div.innerHTML = `
-                    <div style="flex: 1;">
-                        <div class="participant-name">${p.nome}</div>
-                        ${sugestoes && sugestoes.length > 0 ? 
-                            `<div style="font-size: 0.8rem; color: #b8860b; margin-top: 5px;">
-                                <i class="fas fa-gift"></i> ${sugestoes.length} sugestão(ões)
-                            </div>` : ''
-                        }
-                    </div>
-                    <div class="participant-status ${statusClass}">${statusText}</div>
-                `;
-                container.appendChild(div);
-            }
-        }
-        
-        async function gerarLinks() {
-            if (estado.participantes.length < 2) {
-                mostrarErro('Adicione pelo menos 2 participantes');
-                return;
-            }
-            
-            const container = document.getElementById('links-list');
             container.innerHTML = '';
             
-            for (const p of estado.participantes) {
-                const url = `${window.location.origin}${window.location.pathname}?sorteio=${estado.sorteio.codigo}&participante=${encodeURIComponent(p.nome)}`;
-                
-                const { data: sugestoes } = await supabase
-                    .from('sugestoes_presentes')
-                    .select('sugestao')
-                    .eq('participante_id', p.id);
-                
-                const linkBox = document.createElement('div');
-                linkBox.className = 'link-box';
-                linkBox.innerHTML = `
-                    <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <strong style="color: #fff;">${p.nome}</strong>
-                            ${sugestoes && sugestoes.length > 0 ? 
-                                `<span style="font-size: 0.8rem; color: #b8860b; margin-left: 10px;">
-                                    <i class="fas fa-gift"></i> ${sugestoes.length}
-                                </span>` : ''
-                            }
-                        </div>
-                        <div style="display: flex; gap: 10px;">
-                            <i class="fas fa-copy" style="color: #b8860b; cursor: pointer;" 
-                               onclick="copiarLink('${url}', '${p.nome}')" 
-                               title="Copiar link"></i>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <a href="${url}" style="word-break: break-all; font-size: 0.85rem;">${url}</a>
-                    </div>
-                    ${sugestoes && sugestoes.length > 0 ? 
-                        `<div style="font-size: 0.8rem; color: #aaa; margin-top: 10px;">
-                            <div><strong>Sugestões:</strong></div>
-                            ${sugestoes.slice(0, 2).map((s, i) => 
-                                `<div>${i+1}. ${s.sugestao}</div>`
-                            ).join('')}
-                            ${sugestoes.length > 2 ? `<div>... e mais ${sugestoes.length - 2}</div>` : ''}
-                        </div>` : ''
-                    }
+            estado.participantes.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'participant-item';
+                div.innerHTML = `
+                    <span class="participant-name">${p.nome}</span>
+                    <span class="participant-status status-waiting">Aguardando Sorteio</span>
                 `;
-                container.appendChild(linkBox);
-            }
-            
-            document.getElementById('links-container').classList.remove('hidden');
-            mostrarMensagem(`${estado.participantes.length} links gerados com sucesso!`);
-        }
-        
-        function copiarLink(url, nome) {
-            navigator.clipboard.writeText(url).then(() => {
-                mostrarMensagem(`Link de ${nome} copiado!`, 'success');
-            }).catch(err => {
-                mostrarErro('Erro ao copiar link');
+                container.appendChild(div);
             });
         }
         
-        async function verificarParticipante() {
-            const params = new URLSearchParams(window.location.search);
-            const codigoSorteio = params.get('sorteio');
-            const nomeParticipante = params.get('participante');
-            
-            if (!codigoSorteio || !nomeParticipante) {
-                return false;
+        // --- NOVA LÓGICA DE SORTEIO ---
+        async function gerarLinks() {
+            if (estado.participantes.length < 2) {
+                mostrarErro('Você precisa de pelo menos 2 participantes para realizar o sorteio.');
+                return;
             }
-            
+
+            // 1. Algoritmo de Sorteio (Shuffling)
+            let participantes = [...estado.participantes];
+            // Embaralha usando Fisher-Yates
+            for (let i = participantes.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [participantes[i], participantes[j]] = [participantes[j], participantes[i]];
+            }
+
+            // Lógica circular: O índice i tira o índice i+1. O último tira o primeiro.
+            // Isso garante que ninguém tira a si mesmo e cria um ciclo único (todos dão e recebem).
+            let matches = [];
+            for (let i = 0; i < participantes.length; i++) {
+                const quemTira = participantes[i];
+                const quemRecebe = participantes[(i + 1) % participantes.length];
+                
+                matches.push({
+                    giver: quemTira,
+                    receiver: quemRecebe
+                });
+            }
+
+            // 2. Salvar no Banco
             try {
-                const { data: sorteioData, error: sorteioError } = await supabase
-                    .from('sorteios')
-                    .select('*')
-                    .eq('codigo', codigoSorteio.toUpperCase())
-                    .single();
+                mostrarMensagem('Realizando sorteio e salvando no banco de dados...', 'success');
                 
-                if (sorteioError) {
-                    mostrarErro('Sorteio não encontrado');
-                    return false;
+                // Atualiza um por um (idealmente seria batch update, mas loop é mais simples aqui)
+                for (const match of matches) {
+                    const { error } = await supabase
+                        .from('participantes')
+                        .update({ amigo_secreto_id: match.receiver.id })
+                        .eq('id', match.giver.id);
+                        
+                    if(error) throw error;
                 }
+
+                // Recarrega dados para ter certeza
+                await carregarParticipantes();
                 
-                estado.sorteio = sorteioData;
-                
-                const { data: participanteData, error: participanteError } = await supabase
+                // 3. Gerar Links Visuais
+                exibirLinks();
+                mostrarMensagem('Sorteio realizado e salvo com sucesso! Distribua os links.');
+
+            } catch (error) {
+                mostrarErro('Erro ao salvar sorteio: ' + error.message);
+                console.error(error);
+            }
+        }
+
+        function exibirLinks() {
+            const container = document.getElementById('links-container');
+            const list = document.getElementById('links-list');
+            
+            list.innerHTML = '';
+            container.classList.remove('hidden');
+            
+            // URL base atual
+            const baseUrl = window.location.href.split('?')[0];
+            
+            estado.participantes.forEach(p => {
+                const link = `${baseUrl}?k=${p.codigo_pessoal}`;
+                const div = document.createElement('div');
+                div.className = 'link-box';
+                div.innerHTML = `
+                    <div style="font-weight: bold; color: #fff; margin-bottom: 5px;">${p.nome}</div>
+                    <a href="${link}" target="_blank">${link}</a>
+                    <button class="btn" style="padding: 5px 10px; font-size: 0.8rem; margin-left: 10px;" onclick="copiarLink('${link}')">
+                        <i class="fas fa-copy"></i> Copiar
+                    </button>
+                `;
+                list.appendChild(div);
+            });
+        }
+        
+        function copiarLink(texto) {
+            navigator.clipboard.writeText(texto).then(() => {
+                mostrarMensagem('Link copiado!');
+            });
+        }
+
+        // --- LÓGICA DO PARTICIPANTE (AGORA APENAS CONSULTA) ---
+        
+        async function carregarTelaParticipante(codigo) {
+            try {
+                // Busca o participante pelo código
+                const { data: pData, error: pError } = await supabase
                     .from('participantes')
-                    .select('*')
-                    .eq('sorteio_id', estado.sorteio.id)
-                    .eq('nome', decodeURIComponent(nomeParticipante))
+                    .select('*, sorteios(*)')
+                    .eq('codigo_pessoal', codigo)
                     .single();
                 
-                if (participanteError) {
-                    mostrarErro('Você não está na lista deste sorteio');
-                    return false;
+                if (pError || !pData) {
+                    mostrarErro('Link inválido ou participante não encontrado.');
+                    return;
                 }
                 
-                estado.participante = participanteData;
+                estado.participante = pData;
+                estado.sorteio = pData.sorteios;
+                
+                document.getElementById('participant-name').textContent = pData.nome;
+                document.getElementById('participant-sorteio-name').textContent = pData.sorteios.nome;
                 
                 mostrarTela('screen-participant');
-                document.getElementById('participant-sorteio-name').textContent = estado.sorteio.nome;
-                document.getElementById('participant-name').textContent = estado.participante.nome;
                 
-                if (!estado.participante.ja_sorteou) {
+                // Verifica se já existe um sorteio salvo
+                if (pData.amigo_secreto_id) {
+                    // Se já sorteou, apenas libera os botões de ver
                     document.getElementById('participant-draw').classList.remove('hidden');
                     document.getElementById('participant-result').classList.add('hidden');
                 } else {
+                    mostrarErro('O sorteio ainda não foi realizado pelo organizador.');
                     document.getElementById('participant-draw').classList.add('hidden');
-                    document.getElementById('participant-result').classList.remove('hidden');
                 }
                 
-                return true;
-                
             } catch (error) {
-                mostrarErro('Erro: ' + error.message);
-                return false;
+                mostrarErro('Erro ao carregar dados: ' + error.message);
             }
         }
         
         async function realizarSorteio() {
+            // Nesta versão, "realizarSorteio" para o participante é apenas REVELAR o resultado
+            // pois o sorteio já foi feito pelo organizador
+            
+            if (!estado.participante.amigo_secreto_id) {
+                mostrarErro('O sorteio ainda não foi finalizado pelo organizador.');
+                return;
+            }
+
             try {
-           
-                if (estado.participante.ja_sorteou) {
-                    await verResultadoNovamente();
-                    return;
-                }
-                
-                const { data: todosParticipantes, error } = await supabase
+                // Busca os dados do amigo secreto (nome)
+                const { data: amigo, error } = await supabase
                     .from('participantes')
-                    .select('*')
-                    .eq('sorteio_id', estado.sorteio.id);
+                    .select('nome, id')
+                    .eq('id', estado.participante.amigo_secreto_id)
+                    .single();
                 
                 if (error) throw error;
                 
-                let possiveis = todosParticipantes.filter(p => p.id !== estado.participante.id);
+                mostrarResultado(amigo);
                 
-                const naoSorteadoAinda = possiveis.filter(p => !p.ja_foi_sorteado);
-                if (naoSorteadoAinda.length > 0) {
-                    possiveis = naoSorteadoAinda;
+                // Marca como visto (opcional, apenas para controle)
+                if (!estado.participante.ja_sorteou) {
+                    await supabase
+                        .from('participantes')
+                        .update({ ja_sorteou: true })
+                        .eq('id', estado.participante.id);
                 }
-                
-                if (possiveis.length === 0) {
-                    mostrarErro('Não há participantes disponíveis');
-                    return;
-                }
-                
-                const amigoSorteado = possiveis[Math.floor(Math.random() * possiveis.length)];
-                
-                const { error: error1 } = await supabase
-                    .from('participantes')
-                    .update({
-                        ja_sorteou: true,
-                        tirou: amigoSorteado.nome,
-                        sorteado: true
-                    })
-                    .eq('id', estado.participante.id);
-                
-                if (error1) throw error1;
-                
-                const { error: error2 } = await supabase
-                    .from('participantes')
-                    .update({
-                        ja_foi_sorteado: true
-                    })
-                    .eq('id', amigoSorteado.id);
-                
-                if (error2) throw error2;
-                
-                estado.participante.ja_sorteou = true;
-                estado.participante.tirou = amigoSorteado.nome;
-                
-                criarEfeitosNatalinos();
-                
-                setTimeout(async () => {
-                    await mostrarResultadoCompleto(amigoSorteado);
-                    mostrarMensagem('Amigo secreto revelado com sucesso!');
-                }, 500);
                 
             } catch (error) {
-                mostrarErro('Erro: ' + error.message);
+                mostrarErro('Erro ao revelar amigo: ' + error.message);
             }
         }
         
-        async function mostrarResultadoCompleto(amigoSorteado) {
-            document.getElementById('secret-friend-name').textContent = amigoSorteado.nome;
-            document.getElementById('friend-name').textContent = amigoSorteado.nome;
+        function verResultadoNovamente() {
+            realizarSorteio();
+        }
+        
+        async function mostrarResultado(amigo) {
+            document.getElementById('secret-friend-name').textContent = amigo.nome;
+            document.getElementById('friend-name').textContent = amigo.nome;
             
-            const { data: sugestoes } = await supabase
-                .from('sugestoes_presentes')
-                .select('sugestao')
-                .eq('participante_id', amigoSorteado.id);
-            
-            const suggestionsList = document.getElementById('suggestions-list');
-            suggestionsList.innerHTML = '';
-            
-            if (sugestoes && sugestoes.length > 0) {
-                document.getElementById('friend-suggestions').style.display = 'block';
+            // Buscar sugestões
+            try {
+                const { data: sugestoes, error } = await supabase
+                    .from('sugestoes_presentes')
+                    .select('sugestao')
+                    .eq('participante_id', amigo.id);
+                    
+                const list = document.getElementById('suggestions-list');
+                const container = document.getElementById('friend-suggestions');
                 
-                sugestoes.forEach((sugestao, index) => {
-                    const item = document.createElement('div');
-                    item.className = 'friend-suggestion-item';
-                    item.innerHTML = `
-                        <div class="friend-suggestion-number">${index + 1}</div>
-                        <div class="friend-suggestion-text">${sugestao.sugestao}</div>
-                    `;
-                    suggestionsList.appendChild(item);
-                });
-            } else {
-                document.getElementById('friend-suggestions').style.display = 'none';
-            }
-            
-            mostrarTela('screen-result');
-        }
-        
-    
-        async function verResultadoNovamente() {
-            if (!estado.participante.tirou) {
-                mostrarErro('Você ainda não sorteou');
-                return;
-            }
-            
-        
-            const { data: amigoSorteado } = await supabase
-                .from('participantes')
-                .select('*')
-                .eq('sorteio_id', estado.sorteio.id)
-                .eq('nome', estado.participante.tirou)
-                .single();
-            
-            if (amigoSorteado) {
-                await mostrarResultadoCompleto(amigoSorteado);
-            } else {
-                mostrarResultado(estado.participante.tirou);
-            }
-        }
-        
-     
-        function mostrarResultado(nome) {
-            document.getElementById('secret-friend-name').textContent = nome;
-            document.getElementById('friend-suggestions').style.display = 'none';
-            mostrarTela('screen-result');
-        }
-        
-    
-        function inicio() {
-            window.location.href = window.location.pathname;
-        }
-        
-     
-        function criarEfeitosNatalinos() {
-            for (let i = 0; i < 30; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.style.position = 'fixed';
-                    confetti.style.width = '8px';
-                    confetti.style.height = '8px';
-                    confetti.style.backgroundColor = ['#b8860b', '#2e8b57', '#b22222'][Math.floor(Math.random() * 3)];
-                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.top = '-10px';
-                    confetti.style.opacity = '0.9';
-                    confetti.style.zIndex = '9999';
-                    
-                    document.body.appendChild(confetti);
-                    
-                    const animation = confetti.animate([
-                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-                        { transform: `translateY(${window.innerHeight + 20}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
-                    ], {
-                        duration: Math.random() * 2000 + 1000,
-                        easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+                if (!error && sugestoes && sugestoes.length > 0) {
+                    list.innerHTML = '';
+                    sugestoes.forEach((s, index) => {
+                        const div = document.createElement('div');
+                        div.className = 'friend-suggestion-item';
+                        div.innerHTML = `
+                            <div class="friend-suggestion-number">${index + 1}</div>
+                            <div class="friend-suggestion-text">${s.sugestao}</div>
+                        `;
+                        list.appendChild(div);
                     });
-                    
-                    animation.onfinish = () => {
-                        confetti.remove();
-                    };
-                }, i * 100);
-            }
-        }
-        
-      
-        function criarFlocosDeNeve() {
-            const snowflakesContainer = document.getElementById('snowflakes');
-            const snowflakeCount = 50;
-            
-            for (let i = 0; i < snowflakeCount; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                
-                const size = Math.random() * 5 + 3;
-                snowflake.style.width = `${size}px`;
-                snowflake.style.height = `${size}px`;
-                
-                snowflake.style.left = `${Math.random() * 100}%`;
-                snowflake.style.top = `${Math.random() * 100}%`;
-                
-                snowflake.style.opacity = Math.random() * 0.6 + 0.3;
-                
-                snowflakesContainer.appendChild(snowflake);
-                animateSnowflake(snowflake);
-            }
-        }
-        
-        function animateSnowflake(snowflake) {
-            const amplitude = Math.random() * 30 + 10;
-            const duration = Math.random() * 10 + 15;
-            const delay = Math.random() * 5;
-            
-            snowflake.style.animation = `fall ${duration}s linear ${delay}s infinite`;
-            
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fall {
-                    0% {
-                        transform: translateY(-100px) translateX(0);
-                        opacity: ${snowflake.style.opacity};
-                    }
-                    100% {
-                        transform: translateY(100vh) translateX(${amplitude}px);
-                        opacity: 0;
-                    }
+                    container.style.display = 'block';
+                } else {
+                    container.style.display = 'none';
                 }
-            `;
-            document.head.appendChild(style);
+                
+            } catch (e) {
+                console.error(e);
+            }
+            
+            mostrarTela('screen-result');
+        }
+
+        // Efeito de Neve
+        function createSnowflakes() {
+            const container = document.getElementById('snowflakes');
+            const flakeCount = 50;
+            
+            for (let i = 0; i < flakeCount; i++) {
+                const flake = document.createElement('div');
+                flake.className = 'snowflake';
+                const size = Math.random() * 5 + 2;
+                flake.style.width = `${size}px`;
+                flake.style.height = `${size}px`;
+                flake.style.left = `${Math.random() * 100}%`;
+                flake.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                flake.style.animationDelay = `${Math.random() * 2}s`;
+                flake.style.opacity = Math.random();
+                
+                // Animação simples via JS para não complicar CSS
+                animateSnowflake(flake);
+                
+                container.appendChild(flake);
+            }
         }
         
-      
-        async function init() {
-            criarFlocosDeNeve();
+        function animateSnowflake(flake) {
+            let top = -10;
+            const speed = Math.random() * 1 + 0.5;
             
-            const isParticipante = await verificarParticipante();
+            function fall() {
+                top += speed;
+                if (top > window.innerHeight) {
+                    top = -10;
+                    flake.style.left = `${Math.random() * 100}%`;
+                }
+                flake.style.top = `${top}px`;
+                requestAnimationFrame(fall);
+            }
+            fall();
+        }
+        
+        // Inicialização
+        window.onload = function() {
+            createSnowflakes();
             
-            if (!isParticipante) {
+            // Verifica se tem parâmetro na URL (?k=CODIGO)
+            const urlParams = new URLSearchParams(window.location.search);
+            const codigoLink = urlParams.get('k');
+            
+            if (codigoLink) {
+                carregarTelaParticipante(codigoLink);
+            } else {
                 mostrarTela('screen-create');
             }
-        }
-        
-      
-        window.onload = init;
+        };
     </script>
 </body>
 </html>
