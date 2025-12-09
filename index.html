@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amigo Secreto - Edição Natalina</title>
     <style>
-        /* Estilos originais (mantidos) */
+        /* CSS ORIGINAL MANTIDO */
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +14,6 @@
         
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
-            /* Fundo com tema natalino (mantido) */
             background: 
                 linear-gradient(rgba(10, 26, 21, 0.85), rgba(26, 44, 37, 0.9)),
                 url('https://images.unsplash.com/photo-1512389142860-9c449e58a543?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
@@ -24,301 +23,671 @@
             color: #e8e6e3;
             min-height: 100vh;
             line-height: 1.6;
-            overflow-x: hidden; /* Evita scroll horizontal na neve */
+            overflow-x: hidden; /* Adicionado para evitar scroll na neve */
         }
         
-        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
         
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             padding: 20px;
-            border-bottom: 1px solid rgba(184, 134, 11, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
         
         .site-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: #b8860b;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 3rem;
+            font-weight: 300;
             letter-spacing: 2px;
+            color: #fff;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .site-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 25%;
+            width: 50%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #b8860b, transparent);
+        }
+        
+        .site-subtitle {
+            font-size: 1rem;
+            color: #aaa;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-top: 10px;
         }
         
         .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 8px;
-            padding: 30px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
         }
         
-        .form-group { margin-bottom: 20px; }
-        .form-label { display: block; margin-bottom: 8px; color: #aaa; font-size: 0.9rem; text-transform: uppercase; }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(184, 134, 11, 0.3);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
         
         .form-input {
             width: 100%;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+            border-radius: 5px;
             color: #fff;
             font-size: 1rem;
+            font-family: 'Georgia', serif;
+            transition: all 0.3s ease;
         }
         
-        .form-input:focus { outline: none; border-color: #b8860b; }
+        .form-input:focus {
+            outline: none;
+            border-color: #b8860b;
+            background: rgba(184, 134, 11, 0.1);
+            box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.2);
+        }
         
         .btn {
             display: inline-block;
-            padding: 12px 25px;
+            padding: 15px 35px;
             background: transparent;
             color: #b8860b;
             border: 1px solid #b8860b;
-            border-radius: 4px;
+            border-radius: 5px;
             font-size: 1rem;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s;
-            text-align: center;
+            font-family: 'Georgia', serif;
             text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            backdrop-filter: blur(5px);
         }
         
-        .btn:hover { background: rgba(184, 134, 11, 0.1); }
-        .btn-primary { background: #b8860b; color: #000; font-weight: bold; border-color: #b8860b;}
-        .btn-primary:hover { background: #d4af37; border-color: #d4af37; }
+        .btn:hover {
+            background: rgba(184, 134, 11, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(184, 134, 11, 0.2);
+        }
+        
+        .btn-primary {
+            background: rgba(184, 134, 11, 0.9);
+            color: #0a1a15;
+            font-weight: bold;
+        }
+        
+        .btn-primary:hover {
+            background: rgba(212, 175, 55, 0.9);
+            border-color: #d4af37;
+        }
+        
+        .participant-list {
+            margin: 25px 0;
+        }
         
         .participant-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 5px;
+            margin-bottom: 8px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .participant-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(5px);
+        }
+        
+        .participant-name {
+            font-size: 1.1rem;
+            color: #fff;
+        }
+        
+        .participant-status {
+            font-size: 0.85rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .status-waiting {
+            color: #b8860b;
+            border: 1px solid #b8860b;
+            background: rgba(184, 134, 11, 0.1);
+        }
+        
+        .status-done {
+            color: #2e8b57;
+            border: 1px solid #2e8b57;
+            background: rgba(46, 139, 87, 0.1);
         }
         
         .link-box {
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 4px;
-            word-break: break-all;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
         
-        .link-box a { color: #98fb98; }
+        .link-box:hover {
+            border-color: rgba(184, 134, 11, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .link-box a {
+            color: #b8860b;
+            text-decoration: none;
+            word-break: break-all;
+            font-size: 0.9rem;
+        }
+        
+        .link-box a:hover {
+            text-decoration: underline;
+        }
+        
+        .result-screen {
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .result-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
         
         .secret-name {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
+            font-size: 3.5rem;
+            font-weight: 300;
             color: #b8860b;
-            text-align: center;
-            margin: 40px 0;
-            padding: 20px;
-            border: 1px dashed rgba(184, 134, 11, 0.3);
+            margin: 30px 0;
+            letter-spacing: 2px;
+            padding: 30px;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            background: rgba(184, 134, 11, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
             animation: pulse 2s infinite;
         }
-
+        
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
+            0% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(184, 134, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); }
         }
         
-        .hidden { display: none; }
-        .message { padding: 10px; margin-bottom: 15px; border-radius: 4px; text-align: center; display: none; }
-        .message-success { background: rgba(46, 139, 87, 0.2); color: #98fb98; }
-        .message-error { background: rgba(178, 34, 34, 0.2); color: #ff6b6b; }
-
-        /* Estilos para os flocos de neve (mantidos) */
-        .snowflake {
+        .message {
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+            border-left: 4px solid;
+            backdrop-filter: blur(10px);
+        }
+        
+        .message-success {
+            background: rgba(46, 139, 87, 0.15);
+            border-color: #cacaca;
+            color: #cacaca;
+            display: block;
+        }
+        
+        .message-error {
+            background: rgba(178, 34, 34, 0.15);
+            border-color: #cacaca;
+            color: #cacaca;
+            display: block;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-muted {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .christmas-divider {
+            height: 1px;
+            background: rgba(184, 134, 11, 0.5);
+            margin: 30px 0;
+        }
+        
+        .snowflakes {
             position: fixed;
-            top: -10px;
-            color: white;
-            font-size: 1em;
-            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
+            z-index: -1;
+        }
+        
+        .snowflake {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+        
+        /* Estilos de sugestões REMOVIDOS */
+        /* .suggestions-box, .suggestion-item, etc. não existem mais */
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .site-title {
+                font-size: 2.2rem;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .secret-name {
+                font-size: 2.5rem;
+                padding: 15px;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                width: 100%;
+            }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div id="snow-container"></div>
+
+    <div class="snowflakes" id="snowflakes"></div>
     
     <div class="container">
         <header class="header">
-            <h1 class="site-title"><i class="fas fa-gift"></i> Amigo Secreto</h1>
+            <h1 class="site-title">- AMIGO SECRETO -</h1>
+            <div class="site-subtitle">Edição Natalina</div>
+            <div class="christmas-divider"></div>
+            <p style="color: #ccc; margin-top: 20px; font-size: 1.1rem;">
+                > Sorteio Simples <
+            </p>
         </header>
         
         <div id="message" class="message"></div>
 
         <div id="screen-create" class="card">
-            <h2 style="margin-bottom: 20px; color: #fff;">Criar Novo Grupo</h2>
+            <h2 class="section-title">Criar Novo Sorteio</h2>
             <div class="form-group">
-                <label class="form-label">Nome do Grupo</label>
-                <input type="text" id="sorteio-nome" class="form-input" placeholder="Ex: Família Silva 2025">
+                <label class="form-label">Nome do Sorteio</label>
+                <input type="text" id="sorteio-nome" class="form-input" placeholder="Natal 2025">
             </div>
             <div class="form-group">
-                <label class="form-label">Código de Acesso (sem espaços)</label>
-                <input type="text" id="sorteio-codigo" class="form-input" placeholder="Ex: FAMILIA2025">
+                <label class="form-label">Código Secreto</label>
+                <input type="text" id="sorteio-codigo" class="form-input" placeholder="NATAL2025 (sem espaços)">
             </div>
-            <button class="btn btn-primary" onclick="criarSorteio()">Começar</button>
+            <button class="btn btn-primary" onclick="criarSorteio()" style="width: 100%;">
+                <i class="fas fa-plus-circle"></i> Criar Sorteio
+            </button>
         </div>
         
         <div id="screen-organizer" class="card hidden">
-            <h2 style="margin-bottom: 20px; color: #b8860b;">Grupo: <span id="display-group-name"></span></h2>
+            <h2 class="section-title">Organizando: <span id="sorteio-nome-display" style="color: #b8860b;"></span></h2>
             
-            <div class="form-group">
-                <label class="form-label">Nome do Participante</label>
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="participante-nome" class="form-input" placeholder="Digite o nome...">
-                    <button class="btn btn-primary" style="width: auto;" onclick="adicionarParticipante()">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
+            <div class="form-group" style="display: flex; gap: 10px;">
+                <input type="text" id="participante-nome" class="form-input" placeholder="Digite o nome completo" style="flex: 1;">
+                <button class="btn btn-primary" onclick="adicionarParticipante()" style="width: auto; min-width: 150px; margin-top: 0;">
+                    <i class="fas fa-user-plus"></i> Add
+                </button>
             </div>
             
-            <h3 style="margin: 20px 0; border-bottom: 1px solid #333; padding-bottom: 10px;">
-                Participantes (<span id="participant-count">0</span>)
-            </h3>
+            <h3 class="section-title">Participantes (<span id="participant-count">0</span>)</h3>
             
-            <div id="participant-list" style="margin-bottom: 30px;"></div>
+            <div class="participant-list" id="participant-list">
+                <p class="text-center text-muted">Nenhum participante ainda.</p>
+            </div>
             
-            <div style="display: flex; gap: 10px;">
-                <button class="btn btn-primary" onclick="realizarSorteioEGerarLinks()">
+            <div class="christmas-divider"></div>
+            
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="realizarSorteioEGerarLinks()" style="flex: 1;">
                     <i class="fas fa-random"></i> Sortear e Gerar Links
                 </button>
-                <button class="btn" onclick="inicio()">Sair</button>
+                <button class="btn" onclick="inicio()" style="flex: 1;">
+                    <i class="fas fa-undo"></i> Sair
+                </button>
             </div>
             
-            <div id="links-container" class="hidden" style="margin-top: 30px; border-top: 1px solid #444; padding-top: 20px;">
-                <h3 style="color: #98fb98; margin-bottom: 15px;">Sorteio Realizado!</h3>
-                <p style="color: #ccc; margin-bottom: 15px;">Copie e envie o link para cada pessoa:</p>
+            <div id="links-container" class="hidden">
+                <h3 class="section-title" style="margin-top: 30px;">Links Pessoais</h3>
+                <p class="text-muted" style="margin-bottom: 20px;">
+                    Copie e envie o link para cada pessoa:
+                </p>
                 <div id="links-list"></div>
             </div>
         </div>
         
         <div id="screen-participant" class="card hidden">
-            <div style="text-align: center;">
-                <h2 style="color: #aaa;">Olá, <span id="part-name" style="color: #fff;"></span>!</h2>
-                <p style="margin: 10px 0 30px 0;">Você está participando do sorteio: <strong id="sorteio-name"></strong></p>
-                
-                <div id="reveal-area">
-                    <button class="btn btn-primary" onclick="revelarAmigo()">
-                        <i class="fas fa-eye"></i> Ver Meu Amigo Secreto
-                    </button>
+            <h2 class="section-title"><span id="participant-sorteio-name"></span></h2>
+            
+            <div id="participant-info">
+                <h3 style="font-size: 1.4rem; color: #ccc; margin-bottom: 20px;">
+                    Bem-vindo(a), <span id="participant-name" style="color: #b8860b;"></span>
+                </h3>
+                <p style="color: #aaa; margin-bottom: 30px; font-style: italic;">
+                    Você está participando do nosso amigo secreto natalino.
+                </p>
+            </div>
+            
+            <div id="reveal-area">
+                <button class="btn btn-primary" onclick="revelarAmigo()" style="width: 100%;">
+                    <i class="fas fa-gift"></i> Revelar Amigo Secreto
+                </button>
+            </div>
+
+            <div id="participant-result-area" class="hidden">
+                 <div class="text-center" style="margin: 30px 0;">
+                    <p style="color: #ccc; margin-bottom: 20px;">
+                        Clique no botão abaixo para ver seu Amigo Secreto novamente.
+                    </p>
                 </div>
                 
-                <div id="result-area" class="hidden">
-                    <p>Seu amigo secreto é:</p>
-                    <div class="secret-name" id="secret-friend"></div>
-                    <p style="font-size: 0.9rem; color: #888;">Tire um print ou memorize. Psiu, é segredo!</p>
-                </div>
+                <button class="btn btn-primary" onclick="buscarAmigoSecreto(true)" style="width: 100%;">
+                    <i class="fas fa-eye"></i> Ver Amigo Secreto
+                </button>
             </div>
         </div>
+        
+        <div id="screen-result" class="result-screen hidden">
+            <h2 class="result-title"> Seu Amigo Secreto é </h2>
+            
+            <div class="christmas-divider"></div>
+            
+            <div class="secret-name" id="secret-friend-name"></div>
+            
+            <div class="christmas-divider"></div>            
+            
+            <p style="color: #aaa; margin: 30px 0; font-style: italic;">
+                Esta informação é confidencial. Por favor, mantenha em segredo.
+            </p>
+            
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn" onclick="window.print()">
+                    <i class="fas fa-print"></i> Imprimir
+                </button>
+                <button class="btn" onclick="inicio()">
+                    <i class="fas fa-home"></i> Voltar ao Início
+                </button>
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <p>Amigo Secreto &copy; 2025 - Troca de Presentes Natalina</p>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: #888;">
+                Por DLedebuhr
+            </p>
+        </footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
-        // Use as suas chaves do Supabase
+        // CONFIGURAÇÃO DO SUPABASE
         const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co'; // SUBSTITUA PELA SUA URL REAL
         const SUPABASE_KEY = 'sb_publishable_9sSZQCTFdzvYQwO3l10HOA_Hu7PEaLe'; // SUBSTITUA PELA SUA CHAVE PUBLISHABLE REAL
+        
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
         let estado = {
             sorteio: null,
+            participante: null,
             participantes: [],
-            meuUsuario: null
+            isOrganizador: false
         };
-
-        // --- FUNÇÕES DE NAVEGAÇÃO E UI ---
+        
+        // --- FUNÇÕES DE UTILIADE ---
         function mostrarMensagem(texto, tipo = 'success') {
             const el = document.getElementById('message');
             el.textContent = texto;
             el.className = `message message-${tipo}`;
-            el.style.display = 'block';
-            setTimeout(() => { el.style.display = 'none'; }, 4000);
+            setTimeout(() => el.className = 'message', 5000);
         }
-
+        
+        function mostrarErro(texto) {
+            mostrarMensagem(texto, 'error');
+        }
+        
         function mostrarTela(id) {
-            ['screen-create', 'screen-organizer', 'screen-participant'].forEach(s => {
-                document.getElementById(s).classList.add('hidden');
+            ['screen-create', 'screen-organizer', 'screen-participant', 'screen-result'].forEach(screen => {
+                document.getElementById(screen).classList.add('hidden');
             });
             document.getElementById(id).classList.remove('hidden');
         }
         
-        function inicio() { window.location.href = window.location.pathname; }
+        function inicio() {
+            window.location.href = window.location.pathname;
+        }
 
-        // --- FUNÇÕES DO ORGANIZADOR ---
+        function copiarLink(url, nome) {
+            navigator.clipboard.writeText(url).then(() => {
+                mostrarMensagem(`Link de ${nome} copiado!`);
+            }).catch(() => {
+                mostrarErro('Erro ao copiar link');
+            });
+        }
+        
+        // --- ORGANIZADOR: CRIAÇÃO E ADD PESSOAS ---
         async function criarSorteio() {
             const nome = document.getElementById('sorteio-nome').value.trim();
             const codigo = document.getElementById('sorteio-codigo').value.trim().toUpperCase();
             
-            if (!nome || !codigo) return mostrarMensagem('Preencha todos os campos!', 'error');
-
-            const { data, error } = await supabase
-                .from('sorteios')
-                .insert([{ nome, codigo }])
-                .select()
-                .single();
-
-            if (error) return mostrarMensagem('Erro ao criar: Código já existe ou falha na conexão. ' + error.message, 'error');
-
-            estado.sorteio = data;
-            document.getElementById('display-group-name').textContent = nome;
-            mostrarTela('screen-organizer');
+            if (!nome || !codigo) {
+                mostrarErro('Por favor, preencha todos os campos');
+                return;
+            }
+            if (codigo.includes(' ')) {
+                mostrarErro('O código não pode conter espaços');
+                return;
+            }
+            
+            try {
+                const { data, error } = await supabase
+                    .from('sorteios')
+                    .insert([{ nome, codigo }])
+                    .select()
+                    .single();
+                
+                if (error) {
+                    if (error.code === '23505') {
+                        mostrarErro('Este código já existe. Por favor, use um diferente.');
+                    } else {
+                        mostrarErro('Erro ao criar sorteio: ' + error.message);
+                    }
+                    return;
+                }
+                
+                estado.sorteio = data;
+                document.getElementById('sorteio-nome-display').textContent = nome;
+                mostrarTela('screen-organizer');
+                mostrarMensagem('Sorteio criado com sucesso!');
+                await carregarParticipantes();
+                              
+            } catch (error) {
+                mostrarErro('Erro: ' + error.message);
+            }
         }
-
+        
         async function adicionarParticipante() {
             const input = document.getElementById('participante-nome');
             const nome = input.value.trim();
-            if (!nome) return;
-
-            // CORREÇÃO: Inserção alinhada com as colunas do SQL
-            const { data, error } = await supabase
-                .from('participantes')
-                .insert([{
-                    sorteio_id: estado.sorteio.id,
-                    nome: nome,
-                    // Colunas que existem no SQL:
-                    ja_vizualizou: false, 
-                    amigo_secreto_id: null,
-                    codigo_pessoal: Math.random().toString(36).substring(2, 12)
-                }])
-                .select()
-                .single();
-
-            if (error) return mostrarMensagem('Erro ao adicionar: ' + error.message, 'error');
-
-            input.value = '';
-            carregarListaParticipantes();
-            mostrarMensagem(`${nome} adicionado!`);
+            
+            if (!nome) {
+                mostrarErro('Por favor, digite o nome do participante');
+                return;
+            }
+            
+            try {
+                // Inserção alinhada com as colunas do SQL simplificado
+                const { error } = await supabase
+                    .from('participantes')
+                    .insert([{
+                        sorteio_id: estado.sorteio.id,
+                        nome,
+                        ja_vizualizou: false, // Coluna corrigida
+                        amigo_secreto_id: null,
+                        codigo_pessoal: Math.random().toString(36).substring(2, 12) // Geração de código único
+                    }]);
+                
+                if (error) {
+                    mostrarErro('Erro ao adicionar: ' + error.message);
+                    return;
+                }
+                
+                input.value = '';
+                await carregarParticipantes();
+                mostrarMensagem(`${nome} adicionado com sucesso!`);
+                
+            } catch (error) {
+                mostrarErro('Erro: ' + error.message);
+            }
         }
-
-        async function carregarListaParticipantes() {
-            const { data } = await supabase
-                .from('participantes')
-                .select('*')
-                .eq('sorteio_id', estado.sorteio.id)
-                .order('nome');
+        
+        async function carregarParticipantes() {
+            if (!estado.sorteio) return;
+            try {
+                const { data, error } = await supabase
+                    .from('participantes')
+                    .select('*')
+                    .eq('sorteio_id', estado.sorteio.id)
+                    .order('nome');
+                
+                if (error) throw error;
+                
+                estado.participantes = data || [];
+                atualizarListaParticipantes();
+                
+            } catch (error) {
+                console.error('Erro ao carregar participantes:', error);
+            }
+        }
+        
+        function atualizarListaParticipantes() {
+            const container = document.getElementById('participant-list');
+            const count = document.getElementById('participant-count');
             
-            estado.participantes = data || [];
+            container.innerHTML = '';
+            count.textContent = estado.participantes.length;
             
-            const lista = document.getElementById('participant-list');
-            lista.innerHTML = '';
-            document.getElementById('participant-count').textContent = estado.participantes.length;
-
+            if (estado.participantes.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted">Nenhum participante ainda.</p>';
+                return;
+            }
+            
             estado.participantes.forEach(p => {
-                lista.innerHTML += `
-                    <div class="participant-item">
-                        <span>${p.nome}</span>
-                        <span style="color: #aaa; font-size: 0.8rem;">${p.amigo_secreto_id ? 'Já sorteado' : 'Aguardando'}</span>
-                    </div>`;
+                const statusClass = p.amigo_secreto_id ? 'status-done' : 'status-waiting';
+                const statusText = p.amigo_secreto_id ? `Sorteado` : 'Aguardando';
+                
+                const div = document.createElement('div');
+                div.className = 'participant-item';
+                
+                div.innerHTML = `
+                    <div style="flex: 1;">
+                        <div class="participant-name">${p.nome}</div>
+                    </div>
+                    <div class="participant-status ${statusClass}">${statusText}</div>
+                `;
+                container.appendChild(div);
             });
         }
-
+        
+        // --- ORGANIZADOR: SORTEIO E LINKS ---
         async function realizarSorteioEGerarLinks() {
-            if (estado.participantes.length < 2) return mostrarMensagem('Precisa de pelo menos 2 pessoas!', 'error');
-
+            if (estado.participantes.length < 2) {
+                mostrarErro('Adicione pelo menos 2 participantes para sortear');
+                return;
+            }
+            
             // Algoritmo de Sorteio (Fisher-Yates Shuffle para garantir aleatoriedade)
             let pool = [...estado.participantes];
             for (let i = pool.length - 1; i > 0; i--) {
@@ -326,8 +695,8 @@
                 [pool[i], pool[j]] = [pool[j], pool[i]];
             }
 
-            // Atualizar no banco (Ciclo fechado: 0 tira 1, 1 tira 2...)
             try {
+                // Atualizar o banco de dados em um ciclo fechado
                 for (let i = 0; i < pool.length; i++) {
                     const quemTira = pool[i];
                     const quemRecebe = pool[(i + 1) % pool.length];
@@ -338,13 +707,13 @@
                         .eq('id', quemTira.id);
                 }
                 
-                // Recarregar dados e mostrar links
-                await carregarListaParticipantes();
+                // Recarregar dados e exibir links
+                await carregarParticipantes();
                 exibirLinks();
                 mostrarMensagem('Sorteio realizado com sucesso!');
                 
             } catch (err) {
-                mostrarMensagem('Erro no sorteio: ' + err.message, 'error');
+                mostrarErro('Erro no sorteio: ' + err.message);
             }
         }
 
@@ -353,19 +722,28 @@
             container.innerHTML = '';
             document.getElementById('links-container').classList.remove('hidden');
             
+            // Usando o formato simples: ?k=CODIGO_PESSOAL
             const baseUrl = window.location.href.split('?')[0];
 
             estado.participantes.forEach(p => {
                 const link = `${baseUrl}?k=${p.codigo_pessoal}`;
-                container.innerHTML += `
-                    <div class="link-box">
-                        <strong style="color:#fff">${p.nome}</strong><br>
-                        <a href="${link}" target="_blank">${link}</a>
-                    </div>`;
+                
+                const linkBox = document.createElement('div');
+                linkBox.className = 'link-box';
+                linkBox.innerHTML = `
+                    <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                        <strong style="color: #fff;">${p.nome}</strong>
+                        <i class="fas fa-copy" style="color: #b8860b; cursor: pointer;" 
+                            onclick="copiarLink('${link}', '${p.nome}')" 
+                            title="Copiar link"></i>
+                    </div>
+                    <a href="${link}" target="_blank">${link}</a>
+                `;
+                container.appendChild(linkBox);
             });
         }
-
-        // --- FUNÇÕES DO PARTICIPANTE ---
+        
+        // --- PARTICIPANTE: ACESSO E REVELAÇÃO ---
         async function carregarTelaParticipante(codigo) {
             // Busca dados do participante + dados do sorteio (join)
             const { data, error } = await supabase
@@ -374,94 +752,164 @@
                 .eq('codigo_pessoal', codigo)
                 .single();
 
-            if (error || !data) return mostrarMensagem('Link inválido ou expirado.', 'error');
+            if (error || !data) {
+                mostrarErro('Link inválido ou expirado.');
+                return false;
+            }
 
-            estado.meuUsuario = data;
+            estado.participante = data;
+            estado.sorteio = data.sorteios;
             
-            document.getElementById('part-name').textContent = data.nome;
-            document.getElementById('sorteio-name').textContent = data.sorteios.nome;
+            document.getElementById('participant-name').textContent = data.nome;
+            document.getElementById('participant-sorteio-name').textContent = data.sorteios.nome;
             mostrarTela('screen-participant');
 
-            // Se já visualizou antes, já mostra direto
-            if (data.ja_vizualizou && data.amigo_secreto_id) {
-                buscarAmigoSecreto();
+            // Se já visualizou antes
+            if (data.amigo_secreto_id) {
+                document.getElementById('reveal-area').classList.add('hidden');
+                document.getElementById('participant-result-area').classList.remove('hidden');
             }
+            
+            return true;
         }
 
         async function revelarAmigo() {
-            if (!estado.meuUsuario.amigo_secreto_id) {
-                return mostrarMensagem('O organizador ainda não realizou o sorteio!', 'error');
+            if (!estado.participante.amigo_secreto_id) {
+                return mostrarErro('O organizador ainda não realizou o sorteio!');
             }
             
-            // Marca como visualizado no banco
-            await supabase.from('participantes')
-                .update({ ja_vizualizou: true })
-                .eq('id', estado.meuUsuario.id);
+            // Marca como visualizado se ainda não o fez
+            if (!estado.participante.ja_vizualizou) {
+                await supabase.from('participantes')
+                    .update({ ja_vizualizou: true })
+                    .eq('id', estado.participante.id);
+            }
 
+            // Busca e exibe o resultado
             buscarAmigoSecreto();
+            document.getElementById('reveal-area').classList.add('hidden');
+            document.getElementById('participant-result-area').classList.remove('hidden');
         }
 
         async function buscarAmigoSecreto() {
+            if (!estado.participante.amigo_secreto_id) {
+                 return mostrarErro('Sorteio não realizado.');
+            }
+            
+            // Confetti de Natal (mantido)
+            criarEfeitosNatalinos(); 
+            
             const { data } = await supabase
                 .from('participantes')
                 .select('nome')
-                .eq('id', estado.meuUsuario.amigo_secreto_id)
+                .eq('id', estado.participante.amigo_secreto_id)
                 .single();
 
             if (data) {
-                document.getElementById('reveal-area').classList.add('hidden');
-                document.getElementById('result-area').classList.remove('hidden');
-                document.getElementById('secret-friend').textContent = data.nome;
-            }
-        }
-
-        // --- FUNÇÕES DE ANIMAÇÃO (MANTIDAS) ---
-        function createSnowflakes() {
-            const container = document.getElementById('snow-container');
-            for (let i = 0; i < 50; i++) {
-                const flake = document.createElement('div');
-                flake.className = 'snowflake';
-                flake.innerHTML = '&#10052;'; // Símbolo de floco de neve
-                flake.style.left = `${Math.random() * 100}%`;
-                flake.style.fontSize = `${Math.random() * 1 + 0.8}em`;
-                
-                // Animação simples via JS para não complicar CSS
-                animateSnowflake(flake);
-                
-                container.appendChild(flake);
+                document.getElementById('secret-friend-name').textContent = data.nome;
+                mostrarTela('screen-result');
+                mostrarMensagem('Amigo secreto revelado!');
+            } else {
+                 mostrarErro('Não foi possível encontrar seu amigo secreto.');
             }
         }
         
-        function animateSnowflake(flake) {
-            let top = -10;
-            const speed = Math.random() * 1 + 0.5;
-            
-            function fall() {
-                top += speed;
-                if (top > window.innerHeight) {
-                    top = -10;
-                    flake.style.left = `${Math.random() * 100}%`;
-                }
-                flake.style.top = `${top}px`;
-                requestAnimationFrame(fall);
+        // --- ANIMAÇÕES ---
+        function criarEfeitosNatalinos() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.width = '8px';
+                    confetti.style.height = '8px';
+                    confetti.style.backgroundColor = ['#b8860b', '#2e8b57', '#b22222'][Math.floor(Math.random() * 3)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-10px';
+                    confetti.style.opacity = '0.9';
+                    confetti.style.zIndex = '9999';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    const animation = confetti.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                        { transform: `translateY(${window.innerHeight + 20}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                    ], {
+                        duration: Math.random() * 2000 + 1000,
+                        easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+                    });
+                    
+                    animation.onfinish = () => {
+                        confetti.remove();
+                    };
+                }, i * 100);
             }
-            requestAnimationFrame(fall); // Começa a animação
         }
-
-        // --- INICIALIZAÇÃO ---
-        window.onload = function() {
-            createSnowflakes();
+        
+        function criarFlocosDeNeve() {
+            const snowflakesContainer = document.getElementById('snowflakes');
+            const snowflakeCount = 50;
             
-            // Verifica se tem parâmetro na URL (?k=CODIGO)
-            const urlParams = new URLSearchParams(window.location.search);
-            const codigoLink = urlParams.get('k');
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                
+                const size = Math.random() * 5 + 3;
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                
+                snowflake.style.left = `${Math.random() * 100}%`;
+                snowflake.style.top = `${Math.random() * 100}%`;
+                
+                snowflake.style.opacity = Math.random() * 0.6 + 0.3;
+                
+                snowflakesContainer.appendChild(snowflake);
+                animateSnowflake(snowflake);
+            }
+        }
+        
+        function animateSnowflake(snowflake) {
+            const amplitude = Math.random() * 30 + 10;
+            const duration = Math.random() * 10 + 15;
+            const delay = Math.random() * 5;
+            
+            snowflake.style.animation = `fall-${amplitude} ${duration}s linear ${delay}s infinite`;
+            
+            const styleId = `style-fall-${amplitude}`;
+            if (!document.getElementById(styleId)) {
+                 const style = document.createElement('style');
+                 style.id = styleId;
+                 style.textContent = `
+                    @keyframes fall-${amplitude} {
+                        0% {
+                            transform: translateY(-100px) translateX(0);
+                            opacity: ${snowflake.style.opacity};
+                        }
+                        100% {
+                            transform: translateY(100vh) translateX(${amplitude}px);
+                            opacity: 0;
+                        }
+                    }
+                 `;
+                 document.head.appendChild(style);
+            }
+        }
+        
+        // --- INICIALIZAÇÃO ---
+        async function init() {
+            criarFlocosDeNeve();
+            
+            const params = new URLSearchParams(window.location.search);
+            const codigoLink = params.get('k');
             
             if (codigoLink) {
-                carregarTelaParticipante(codigoLink);
+                await carregarTelaParticipante(codigoLink);
             } else {
                 mostrarTela('screen-create');
             }
-        };
+        }
+        
+        window.onload = init;
     </script>
 </body>
 </html>
