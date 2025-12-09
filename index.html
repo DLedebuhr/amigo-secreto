@@ -657,10 +657,11 @@
                 const statusClass = p.amigo_secreto_id ? 'status-done' : 'status-waiting';
                 const statusText = p.amigo_secreto_id ? 'Sorteado' : 'Aguardando';
                 
+                // MOSTRAR APENAS PARA O ORGANIZADOR (apenas status)
                 div.innerHTML = `
                     <div style="flex: 1;">
                         <div class="participant-name">${p.nome}</div>
-                        ${p.amigo_secreto_nome ? 
+                        ${p.amigo_secreto_id ? 
                             `<div style="font-size: 0.85rem; color: #2e8b57; margin-top: 5px;">
                                 <i class="fas fa-check-circle"></i> Já foi sorteado
                             </div>` : 
@@ -699,7 +700,7 @@
                 
                 if (resetError) throw resetError;
                 
-                // Obter lista de participantes
+                // Obter lista de participantes atualizada
                 const { data: participantes, error: fetchError } = await supabase
                     .from('participantes')
                     .select('id, nome')
@@ -733,27 +734,29 @@
                     // Registrar o sorteio
                     sorteados.push({
                         quem: pessoaAtual.id,
-                        tirou: amigoSorteado.id
+                        tirou: amigoSorteado.id,
+                        nome_amigo: amigoSorteado.nome // Guardar o nome também
                     });
                     
                     // Remover o sorteado da lista de disponíveis
                     participantesParaSortear = participantesParaSortear.filter(p => p.id !== amigoSorteado.id);
                     
-                    // Atualizar no banco de dados (SALVA O NOME DO AMIGO SORTEADO)
+                    // Atualizar no banco de dados - SALVANDO O NOME DO AMIGO
                     const { error: updateError } = await supabase
                         .from('participantes')
                         .update({
                             amigo_secreto_id: amigoSorteado.id,
-                            amigo_secreto_nome: amigoSorteado.nome
+                            amigo_secreto_nome: amigoSorteado.nome // SALVAR O NOME AQUI
                         })
                         .eq('id', pessoaAtual.id);
                     
                     if (updateError) throw updateError;
                 }
                 
+                // Recarregar participantes após o sorteio
                 await carregarParticipantes();
                 criarEfeitosNatalinos();
-                mostrarMensagem('Sorteio realizado com sucesso!');
+                mostrarMensagem('Sorteio realizado com sucesso! O nome do amigo secreto foi salvo para cada participante.');
                 
             } catch (error) {
                 mostrarErro('Erro ao realizar sorteio: ' + error.message);
@@ -811,6 +814,15 @@
                     <div style="margin-bottom: 10px;">
                         <a href="${url}" style="word-break: break-all; font-size: 0.85rem;">${url}</a>
                     </div>
+                    <!-- NÃO MOSTRAR QUEM A PESSOA TIROU - APENAS STATUS -->
+                    ${p.amigo_secreto_id ? 
+                        `<div style="font-size: 0.8rem; color: #aaa; margin-top: 10px;">
+                            <div><i class="fas fa-info-circle"></i> Link pessoal para visualizar o amigo secreto</div>
+                        </div>` : 
+                        `<div style="font-size: 0.8rem; color: #b8860b; margin-top: 10px;">
+                            <i class="fas fa-exclamation-triangle"></i> Sorteio pendente
+                        </div>`
+                    }
                 `;
                 container.appendChild(linkBox);
             }
@@ -883,6 +895,30 @@
             }
             
             try {
+                // Verificar se o campo amigo_secreto_nome está preenchido
+                if (!estado.participante.amigo_secreto_nome) {
+                    // Se não estiver, buscar o nome do amigo
+                    const { data: amigoData, error: amigoError } = await supabase
+                        .from('participantes')
+                        .select('nome')
+                        .eq('id', estado.participante.amigo_secreto_id)
+                        .single();
+                    
+                    if (amigoError) throw amigoError;
+                    
+                    estado.participante.amigo_secreto_nome = amigoData.nome;
+                    
+                    // Atualizar no banco também
+                    const { error: updateError } = await supabase
+                        .from('participantes')
+                        .update({
+                            amigo_secreto_nome: amigoData.nome
+                        })
+                        .eq('id', estado.participante.id);
+                    
+                    if (updateError) console.error('Erro ao atualizar nome:', updateError);
+                }
+                
                 // Marcar como visualizado
                 const { error: updateError } = await supabase
                     .from('participantes')
@@ -893,16 +929,8 @@
                 
                 if (updateError) throw updateError;
                 
-                // Obter nome do amigo secreto (da coluna amigo_secreto_nome)
-                const { data: amigoData, error: amigoError } = await supabase
-                    .from('participantes')
-                    .select('amigo_secreto_nome')
-                    .eq('id', estado.participante.id)
-                    .single();
-                
-                if (amigoError) throw amigoError;
-                
-                document.getElementById('secret-friend-name').textContent = amigoData.amigo_secreto_nome;
+                // MOSTRAR O NOME DO AMIGO SECRETO
+                document.getElementById('secret-friend-name').textContent = estado.participante.amigo_secreto_nome;
                 
                 criarEfeitosNatalinos();
                 mostrarTela('screen-result');
