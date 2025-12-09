@@ -559,7 +559,7 @@
             </button>
         </div>
         
-        <div id="screen-organizer" class="card hidden">
+                <div id="screen-organizer" class="card hidden">
             <h2 class="section-title">Organizando: <span id="sorteio-nome-display" style="color: #b8860b;"></span></h2>
             
             <div class="form-group">
@@ -567,24 +567,7 @@
                 <input type="text" id="participante-nome" class="form-input" placeholder="Digite o nome completo">
             </div>
             
-            <div class="suggestions-box" id="suggestions-container">
-                <div class="suggestions-title">
-                    <i class="fas fa-gift"></i>
-                    <span>Sugestões de Presente (opcional)</span>
-                </div>
-                
-                <div id="suggestions-inputs">
-                </div>
-                
-                <div style="margin-top: 15px; display: flex; gap: 10px;">
-                    <button type="button" class="add-suggestion-btn" onclick="adicionarCampoSugestao()">
-                        <i class="fas fa-plus"></i> Adicionar Sugestão
-                    </button>
-                    <button type="button" class="remove-suggestion-btn" onclick="removerTodasSugestoes()">
-                        <i class="fas fa-trash"></i> Limpar Todas
-                    </button>
-                </div>
-            </div>
+            <!-- REMOVIDA A SEÇÃO DE SUGESTÕES DE PRESENTES -->
             
             <button class="btn btn-primary" onclick="adicionarParticipante()" style="width: 100%; margin-top: 20px;">
                 <i class="fas fa-user-plus"></i> Adicionar Participante
@@ -599,7 +582,10 @@
             <div class="christmas-divider"></div>
             
             <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                <button class="btn btn-primary" onclick="gerarLinks()" style="flex: 1;">
+                <button class="btn btn-primary" onclick="realizarSorteioOrganizador()" style="flex: 1;">
+                    <i class="fas fa-random"></i> Realizar Sorteio
+                </button>
+                <button class="btn" onclick="gerarLinks()" style="flex: 1;">
                     <i class="fas fa-link"></i> Gerar Links Individuais
                 </button>
                 <button class="btn" onclick="limparFormulario()" style="flex: 1;">
@@ -628,27 +614,16 @@
                 </p>
             </div>
             
-            <div id="participant-draw" class="hidden">
+            <!-- Tela simplificada - apenas mostra o resultado -->
+            <div id="participant-result">
                 <div class="text-center" style="margin: 30px 0;">
                     <p style="color: #ccc; margin-bottom: 20px;">
-                        Clique no botão abaixo para descobrir seu Amigo Secreto.
+                        Clique no botão abaixo para ver quem você tirou no amigo secreto.
                     </p>
                 </div>
                 
-                <button class="btn btn-primary" onclick="realizarSorteio()" style="width: 100%;">
-                    <i class="fas fa-gift"></i> Revelar Amigo Secreto
-                </button>
-            </div>
-            
-            <div id="participant-result" class="hidden">
-                <div class="text-center" style="margin: 30px 0;">
-                    <p style="color: #ccc; margin-bottom: 20px;">
-                        Clique no botão abaixo para ver seu Amigo Secreto novamente.
-                    </p>
-                </div>
-                
-                <button class="btn btn-primary" onclick="verResultadoNovamente()" style="width: 100%;">
-                    <i class="fas fa-eye"></i> Ver Amigo Secreto
+                <button class="btn btn-primary" onclick="verResultado()" style="width: 100%;">
+                    <i class="fas fa-gift"></i> Ver meu Amigo Secreto
                 </button>
             </div>
         </div>
@@ -661,17 +636,6 @@
             <div class="secret-name" id="secret-friend-name"></div>
             
             <div class="christmas-divider"></div>            
-            
-            <div id="friend-suggestions" class="gift-suggestions" style="display: none;">
-                <h3 class="friend-suggestions-title">
-                    <i class="fas fa-lightbulb"></i> Sugestões de Presente do(a) <span id="friend-name"></span>
-                </h3>
-                <div id="suggestions-list">                  
-                </div>
-                <p style="color: #aaa; font-size: 0.9rem; margin-top: 15px; font-style: italic;">
-                    Estas são sugestões feitas pelo seu amigo secreto. Use como inspiração!
-                </p>
-            </div>
             
             <p style="color: #aaa; margin: 30px 0; font-style: italic;">
                 Esta informação é confidencial. Por favor, mantenha em segredo até a troca de presentes.
@@ -698,7 +662,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
-
         const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_9sSZQCTFdzvYQwO3l10HOA_Hu7PEaLe';
         
@@ -765,80 +728,14 @@
                 document.getElementById('sorteio-nome-display').textContent = nome;
                 mostrarTela('screen-organizer');
                 mostrarMensagem('Sorteio criado com sucesso!');
-                              
-                adicionarCampoSugestao();
                 
             } catch (error) {
                 mostrarErro('Erro: ' + error.message);
             }
         }
         
-        function adicionarCampoSugestao() {
-            const container = document.getElementById('suggestions-inputs');
-            const count = container.children.length;
-            
-            if (count >= 10) {
-                mostrarErro('Máximo de 10 sugestões por participante');
-                return;
-            }
-            
-            const item = document.createElement('div');
-            item.className = 'suggestion-item';
-            item.innerHTML = `
-                <div class="suggestion-number">${count + 1}</div>
-                <div class="suggestion-input-wrapper">
-                    <input type="text" 
-                           class="suggestion-input" 
-                           placeholder="Sugestão ${count + 1} (ex: Livro, Perfume, Camiseta)" 
-                           onkeyup="validarSugestoes()">
-                </div>
-            `;
-            container.appendChild(item);
-            
-            validarSugestoes();
-        }
-        
-        function removerCampoSugestao() {
-            const container = document.getElementById('suggestions-inputs');
-            if (container.children.length > 0) {
-                container.lastElementChild.remove();
-                renumberarSugestoes();
-            }
-        }
-        
-        function removerTodasSugestoes() {
-            const container = document.getElementById('suggestions-inputs');
-            container.innerHTML = '';
-            validarSugestoes();
-        }
-        
-        function renumberarSugestoes() {
-            const inputs = document.querySelectorAll('.suggestion-item');
-            inputs.forEach((item, index) => {
-                const numberDiv = item.querySelector('.suggestion-number');
-                const input = item.querySelector('.suggestion-input');
-                
-                if (numberDiv) numberDiv.textContent = index + 1;
-                if (input) input.placeholder = `Sugestão ${index + 1} (ex: Livro, Perfume, Camiseta)`;
-            });
-        }
-        
-        function validarSugestoes() {
-            const inputs = document.querySelectorAll('.suggestion-input');
-            let todasVazias = true;
-            
-            inputs.forEach(input => {
-                if (input.value.trim().length > 0) {
-                    todasVazias = false;
-                }
-            });
-            
-            return !todasVazias;
-        }
-        
         function limparFormulario() {
             document.getElementById('participante-nome').value = '';
-            document.getElementById('suggestions-inputs').innerHTML = '';
             mostrarMensagem('Formulário limpo!');
         }
         
@@ -850,21 +747,14 @@
                 return;
             }
             
-            const sugestoesInputs = document.querySelectorAll('.suggestion-input');
-            const sugestoes = Array.from(sugestoesInputs)
-                .map(input => input.value.trim())
-                .filter(sugestao => sugestao.length > 0);
-            
             try {
                 const { data, error } = await supabase
                     .from('participantes')
                     .insert([{
                         sorteio_id: estado.sorteio.id,
                         nome,
-                        ja_sorteou: false,
-                        ja_foi_sorteado: false,
-                        sorteado: false,
-                        codigo_pessoal: Math.random().toString(36).substring(2, 10)
+                        codigo_pessoal: Math.random().toString(36).substring(2, 10),
+                        ja_vizualizou: false
                     }])
                     .select()
                     .single();
@@ -874,34 +764,11 @@
                     return;
                 }
                 
-                if (sugestoes.length > 0) {
-                    const sugestoesData = sugestoes.map(sugestao => ({
-                        participante_id: data.id,
-                        sugestao: sugestao,
-                        sorteio_id: estado.sorteio.id
-                    }));
-                    
-                    const { error: sugestoesError } = await supabase
-                        .from('sugestoes_presentes')
-                        .insert(sugestoesData);
-                    
-                    if (sugestoesError) {
-                        console.error('Erro ao salvar sugestões:', sugestoesError);
-                    }
-                }
-                
                 document.getElementById('participante-nome').value = '';
-                document.getElementById('suggestions-inputs').innerHTML = '';
-                adicionarCampoSugestao(); 
                 
                 await carregarParticipantes();
                 
-                const mensagem = `${nome} adicionado com sucesso!`;
-                if (sugestoes.length > 0) {
-                    mostrarMensagem(`${mensagem} ${sugestoes.length} sugestão(ões) salva(s).`);
-                } else {
-                    mostrarMensagem(mensagem);
-                }
+                mostrarMensagem(`${nome} adicionado com sucesso!`);
                 
             } catch (error) {
                 mostrarErro('Erro: ' + error.message);
@@ -939,24 +806,22 @@
             }
             
             for (const p of estado.participantes) {
-                const { data: sugestoes } = await supabase
-                    .from('sugestoes_presentes')
-                    .select('sugestao')
-                    .eq('participante_id', p.id);
-                
                 const div = document.createElement('div');
                 div.className = 'participant-item';
                 
-                const statusClass = p.ja_sorteou ? 'status-done' : 'status-waiting';
-                const statusText = p.ja_sorteou ? `Sorteado` : 'Aguardando';
+                const statusClass = p.amigo_secreto_id ? 'status-done' : 'status-waiting';
+                const statusText = p.amigo_secreto_id ? 'Sorteado' : 'Aguardando';
                 
                 div.innerHTML = `
                     <div style="flex: 1;">
                         <div class="participant-name">${p.nome}</div>
-                        ${sugestoes && sugestoes.length > 0 ? 
+                        ${p.amigo_secreto_id ? 
+                            `<div style="font-size: 0.8rem; color: #2e8b57; margin-top: 5px;">
+                                <i class="fas fa-check-circle"></i> Já sorteado
+                            </div>` : 
                             `<div style="font-size: 0.8rem; color: #b8860b; margin-top: 5px;">
-                                <i class="fas fa-gift"></i> ${sugestoes.length} sugestão(ões)
-                            </div>` : ''
+                                <i class="fas fa-clock"></i> Aguardando sorteio
+                            </div>`
                         }
                     </div>
                     <div class="participant-status ${statusClass}">${statusText}</div>
@@ -965,7 +830,102 @@
             }
         }
         
+        async function realizarSorteioOrganizador() {
+            if (estado.participantes.length < 2) {
+                mostrarErro('Adicione pelo menos 2 participantes');
+                return;
+            }
+            
+            try {
+                // Resetar todos os participantes
+                const { error: resetError } = await supabase
+                    .from('participantes')
+                    .update({
+                        amigo_secreto_id: null
+                    })
+                    .eq('sorteio_id', estado.sorteio.id);
+                
+                if (resetError) throw resetError;
+                
+                // Obter lista de participantes
+                const { data: participantes, error: fetchError } = await supabase
+                    .from('participantes')
+                    .select('id, nome')
+                    .eq('sorteio_id', estado.sorteio.id);
+                
+                if (fetchError) throw fetchError;
+                
+                // Criar uma cópia para o sorteio
+                let participantesParaSortear = [...participantes];
+                let sorteados = [];
+                
+                // Algoritmo para garantir que ninguém tire a si mesmo
+                for (let i = 0; i < participantes.length; i++) {
+                    let pessoaAtual = participantes[i];
+                    let disponiveis = participantesParaSortear.filter(p => 
+                        p.id !== pessoaAtual.id && 
+                        !sorteados.some(s => s.tirou === p.id)
+                    );
+                    
+                    // Se não houver disponíveis, reiniciar o algoritmo
+                    if (disponiveis.length === 0) {
+                        i = -1;
+                        participantesParaSortear = [...participantes];
+                        sorteados = [];
+                        continue;
+                    }
+                    
+                    // Sortear aleatoriamente
+                    const amigoSorteado = disponiveis[Math.floor(Math.random() * disponiveis.length)];
+                    
+                    // Registrar o sorteio
+                    sorteados.push({
+                        quem: pessoaAtual.id,
+                        tirou: amigoSorteado.id
+                    });
+                    
+                    // Remover o sorteado da lista de disponíveis
+                    participantesParaSortear = participantesParaSortear.filter(p => p.id !== amigoSorteado.id);
+                    
+                    // Atualizar no banco de dados
+                    const { error: updateError } = await supabase
+                        .from('participantes')
+                        .update({
+                            amigo_secreto_id: amigoSorteado.id
+                        })
+                        .eq('id', pessoaAtual.id);
+                    
+                    if (updateError) throw updateError;
+                }
+                
+                await carregarParticipantes();
+                criarEfeitosNatalinos();
+                mostrarMensagem('Sorteio realizado com sucesso!');
+                
+            } catch (error) {
+                mostrarErro('Erro ao realizar sorteio: ' + error.message);
+            }
+        }
+        
         async function gerarLinks() {
+            // Verificar se o sorteio já foi realizado
+            const { data: participantesComSorteio, error } = await supabase
+                .from('participantes')
+                .select('id, nome, amigo_secreto_id')
+                .eq('sorteio_id', estado.sorteio.id);
+            
+            if (error) {
+                mostrarErro('Erro ao verificar sorteio');
+                return;
+            }
+            
+            const sorteioRealizado = participantesComSorteio.every(p => p.amigo_secreto_id !== null);
+            
+            if (!sorteioRealizado) {
+                mostrarErro('Realize o sorteio antes de gerar os links');
+                return;
+            }
+            
             if (estado.participantes.length < 2) {
                 mostrarErro('Adicione pelo menos 2 participantes');
                 return;
@@ -977,10 +937,12 @@
             for (const p of estado.participantes) {
                 const url = `${window.location.origin}${window.location.pathname}?sorteio=${estado.sorteio.codigo}&participante=${encodeURIComponent(p.nome)}`;
                 
-                const { data: sugestoes } = await supabase
-                    .from('sugestoes_presentes')
-                    .select('sugestao')
-                    .eq('participante_id', p.id);
+                // Obter nome do amigo secreto
+                const { data: amigoData } = await supabase
+                    .from('participantes')
+                    .select('nome')
+                    .eq('id', p.amigo_secreto_id)
+                    .single();
                 
                 const linkBox = document.createElement('div');
                 linkBox.className = 'link-box';
@@ -988,9 +950,9 @@
                     <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <strong style="color: #fff;">${p.nome}</strong>
-                            ${sugestoes && sugestoes.length > 0 ? 
-                                `<span style="font-size: 0.8rem; color: #b8860b; margin-left: 10px;">
-                                    <i class="fas fa-gift"></i> ${sugestoes.length}
+                            ${amigoData ? 
+                                `<span style="font-size: 0.8rem; color: #2e8b57; margin-left: 10px;">
+                                    <i class="fas fa-user-check"></i> Sorteio realizado
                                 </span>` : ''
                             }
                         </div>
@@ -1003,14 +965,13 @@
                     <div style="margin-bottom: 10px;">
                         <a href="${url}" style="word-break: break-all; font-size: 0.85rem;">${url}</a>
                     </div>
-                    ${sugestoes && sugestoes.length > 0 ? 
+                    ${amigoData ? 
                         `<div style="font-size: 0.8rem; color: #aaa; margin-top: 10px;">
-                            <div><strong>Sugestões:</strong></div>
-                            ${sugestoes.slice(0, 2).map((s, i) => 
-                                `<div>${i+1}. ${s.sugestao}</div>`
-                            ).join('')}
-                            ${sugestoes.length > 2 ? `<div>... e mais ${sugestoes.length - 2}</div>` : ''}
-                        </div>` : ''
+                            <div><strong>Amigo Secreto:</strong> <span style="color: #b8860b;">${amigoData.nome}</span></div>
+                        </div>` : 
+                        `<div style="font-size: 0.8rem; color: #b8860b; margin-top: 10px;">
+                            <i class="fas fa-exclamation-triangle"></i> Sorteio pendente
+                        </div>`
                     }
                 `;
                 container.appendChild(linkBox);
@@ -1069,14 +1030,6 @@
                 document.getElementById('participant-sorteio-name').textContent = estado.sorteio.nome;
                 document.getElementById('participant-name').textContent = estado.participante.nome;
                 
-                if (!estado.participante.ja_sorteou) {
-                    document.getElementById('participant-draw').classList.remove('hidden');
-                    document.getElementById('participant-result').classList.add('hidden');
-                } else {
-                    document.getElementById('participant-draw').classList.add('hidden');
-                    document.getElementById('participant-result').classList.remove('hidden');
-                }
-                
                 return true;
                 
             } catch (error) {
@@ -1085,131 +1038,42 @@
             }
         }
         
-        async function realizarSorteio() {
+        async function verResultado() {
+            if (!estado.participante.amigo_secreto_id) {
+                mostrarErro('O sorteio ainda não foi realizado');
+                return;
+            }
+            
             try {
-           
-                if (estado.participante.ja_sorteou) {
-                    await verResultadoNovamente();
-                    return;
-                }
-                
-                const { data: todosParticipantes, error } = await supabase
-                    .from('participantes')
-                    .select('*')
-                    .eq('sorteio_id', estado.sorteio.id);
-                
-                if (error) throw error;
-                
-                let possiveis = todosParticipantes.filter(p => p.id !== estado.participante.id);
-                
-                const naoSorteadoAinda = possiveis.filter(p => !p.ja_foi_sorteado);
-                if (naoSorteadoAinda.length > 0) {
-                    possiveis = naoSorteadoAinda;
-                }
-                
-                if (possiveis.length === 0) {
-                    mostrarErro('Não há participantes disponíveis');
-                    return;
-                }
-                
-                const amigoSorteado = possiveis[Math.floor(Math.random() * possiveis.length)];
-                
-                const { error: error1 } = await supabase
+                // Marcar como visualizado
+                const { error: updateError } = await supabase
                     .from('participantes')
                     .update({
-                        ja_sorteou: true,
-                        tirou: amigoSorteado.nome,
-                        sorteado: true
+                        ja_vizualizou: true
                     })
                     .eq('id', estado.participante.id);
                 
-                if (error1) throw error1;
+                if (updateError) throw updateError;
                 
-                const { error: error2 } = await supabase
+                // Obter nome do amigo secreto
+                const { data: amigoData, error: amigoError } = await supabase
                     .from('participantes')
-                    .update({
-                        ja_foi_sorteado: true
-                    })
-                    .eq('id', amigoSorteado.id);
+                    .select('nome')
+                    .eq('id', estado.participante.amigo_secreto_id)
+                    .single();
                 
-                if (error2) throw error2;
+                if (amigoError) throw amigoError;
                 
-                estado.participante.ja_sorteou = true;
-                estado.participante.tirou = amigoSorteado.nome;
+                document.getElementById('secret-friend-name').textContent = amigoData.nome;
                 
                 criarEfeitosNatalinos();
-                
-                setTimeout(async () => {
-                    await mostrarResultadoCompleto(amigoSorteado);
-                    mostrarMensagem('Amigo secreto revelado com sucesso!');
-                }, 500);
+                mostrarTela('screen-result');
                 
             } catch (error) {
                 mostrarErro('Erro: ' + error.message);
             }
         }
         
-        async function mostrarResultadoCompleto(amigoSorteado) {
-            document.getElementById('secret-friend-name').textContent = amigoSorteado.nome;
-            document.getElementById('friend-name').textContent = amigoSorteado.nome;
-            
-            const { data: sugestoes } = await supabase
-                .from('sugestoes_presentes')
-                .select('sugestao')
-                .eq('participante_id', amigoSorteado.id);
-            
-            const suggestionsList = document.getElementById('suggestions-list');
-            suggestionsList.innerHTML = '';
-            
-            if (sugestoes && sugestoes.length > 0) {
-                document.getElementById('friend-suggestions').style.display = 'block';
-                
-                sugestoes.forEach((sugestao, index) => {
-                    const item = document.createElement('div');
-                    item.className = 'friend-suggestion-item';
-                    item.innerHTML = `
-                        <div class="friend-suggestion-number">${index + 1}</div>
-                        <div class="friend-suggestion-text">${sugestao.sugestao}</div>
-                    `;
-                    suggestionsList.appendChild(item);
-                });
-            } else {
-                document.getElementById('friend-suggestions').style.display = 'none';
-            }
-            
-            mostrarTela('screen-result');
-        }
-        
-    
-        async function verResultadoNovamente() {
-            if (!estado.participante.tirou) {
-                mostrarErro('Você ainda não sorteou');
-                return;
-            }
-            
-        
-            const { data: amigoSorteado } = await supabase
-                .from('participantes')
-                .select('*')
-                .eq('sorteio_id', estado.sorteio.id)
-                .eq('nome', estado.participante.tirou)
-                .single();
-            
-            if (amigoSorteado) {
-                await mostrarResultadoCompleto(amigoSorteado);
-            } else {
-                mostrarResultado(estado.participante.tirou);
-            }
-        }
-        
-     
-        function mostrarResultado(nome) {
-            document.getElementById('secret-friend-name').textContent = nome;
-            document.getElementById('friend-suggestions').style.display = 'none';
-            mostrarTela('screen-result');
-        }
-        
-    
         function inicio() {
             window.location.href = window.location.pathname;
         }
