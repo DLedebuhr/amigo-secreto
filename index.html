@@ -3,18 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amigo Secreto - Simples</title>
+    <title>Amigo Secreto - Edição Natalina</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* Estilos originais (mantidos) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
-            background: linear-gradient(rgba(10, 26, 21, 0.9), rgba(26, 44, 37, 0.95)),
-                        url('https://images.unsplash.com/photo-1512389142860-9c449e58a543?q=80&w=1469&auto=format&fit=crop');
+            /* Fundo com tema natalino (mantido) */
+            background: 
+                linear-gradient(rgba(10, 26, 21, 0.85), rgba(26, 44, 37, 0.9)),
+                url('https://images.unsplash.com/photo-1512389142860-9c449e58a543?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
+            background-position: center;
             background-attachment: fixed;
             color: #e8e6e3;
             min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden; /* Evita scroll horizontal na neve */
         }
         
         .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
@@ -74,7 +84,7 @@
         }
         
         .btn:hover { background: rgba(184, 134, 11, 0.1); }
-        .btn-primary { background: #b8860b; color: #000; font-weight: bold; }
+        .btn-primary { background: #b8860b; color: #000; font-weight: bold; border-color: #b8860b;}
         .btn-primary:hover { background: #d4af37; border-color: #d4af37; }
         
         .participant-item {
@@ -92,7 +102,7 @@
             word-break: break-all;
         }
         
-        .link-box a { color: #b8860b; }
+        .link-box a { color: #98fb98; }
         
         .secret-name {
             font-family: 'Playfair Display', serif;
@@ -115,10 +125,15 @@
         .message { padding: 10px; margin-bottom: 15px; border-radius: 4px; text-align: center; display: none; }
         .message-success { background: rgba(46, 139, 87, 0.2); color: #98fb98; }
         .message-error { background: rgba(178, 34, 34, 0.2); color: #ff6b6b; }
-        
-        @media (max-width: 600px) {
-            .site-title { font-size: 2rem; }
-            .secret-name { font-size: 2rem; }
+
+        /* Estilos para os flocos de neve (mantidos) */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1em;
+            z-index: 1000;
+            pointer-events: none;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -126,6 +141,8 @@
 </head>
 
 <body>
+    <div id="snow-container"></div>
+    
     <div class="container">
         <header class="header">
             <h1 class="site-title"><i class="fas fa-gift"></i> Amigo Secreto</h1>
@@ -202,9 +219,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
-        // CONFIGURAÇÃO DO SUPABASE
-        const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_9sSZQCTFdzvYQwO3l10HOA_Hu7PEaLe';
+        // Use as suas chaves do Supabase
+        const SUPABASE_URL = 'https://jpxeycjreinwseevmoen.supabase.co'; // SUBSTITUA PELA SUA URL REAL
+        const SUPABASE_KEY = 'sb_publishable_9sSZQCTFdzvYQwO3l10HOA_Hu7PEaLe'; // SUBSTITUA PELA SUA CHAVE PUBLISHABLE REAL
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
         let estado = {
@@ -244,7 +261,7 @@
                 .select()
                 .single();
 
-            if (error) return mostrarMensagem('Erro: Código já existe ou falha na conexão.', 'error');
+            if (error) return mostrarMensagem('Erro ao criar: Código já existe ou falha na conexão. ' + error.message, 'error');
 
             estado.sorteio = data;
             document.getElementById('display-group-name').textContent = nome;
@@ -256,13 +273,14 @@
             const nome = input.value.trim();
             if (!nome) return;
 
-            // INSERÇÃO SIMPLIFICADA (Sem sugestões, colunas corrigidas)
+            // CORREÇÃO: Inserção alinhada com as colunas do SQL
             const { data, error } = await supabase
                 .from('participantes')
                 .insert([{
                     sorteio_id: estado.sorteio.id,
                     nome: nome,
-                    ja_vizualizou: false, // Agora bate com o SQL
+                    // Colunas que existem no SQL:
+                    ja_vizualizou: false, 
                     amigo_secreto_id: null,
                     codigo_pessoal: Math.random().toString(36).substring(2, 12)
                 }])
@@ -301,9 +319,8 @@
         async function realizarSorteioEGerarLinks() {
             if (estado.participantes.length < 2) return mostrarMensagem('Precisa de pelo menos 2 pessoas!', 'error');
 
-            // Algoritmo de Sorteio
+            // Algoritmo de Sorteio (Fisher-Yates Shuffle para garantir aleatoriedade)
             let pool = [...estado.participantes];
-            // Fisher-Yates Shuffle
             for (let i = pool.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [pool[i], pool[j]] = [pool[j], pool[i]];
@@ -357,7 +374,7 @@
                 .eq('codigo_pessoal', codigo)
                 .single();
 
-            if (error || !data) return mostrarMensagem('Link inválido.', 'error');
+            if (error || !data) return mostrarMensagem('Link inválido ou expirado.', 'error');
 
             estado.meuUsuario = data;
             
@@ -376,7 +393,7 @@
                 return mostrarMensagem('O organizador ainda não realizou o sorteio!', 'error');
             }
             
-            // Marca como visualizado
+            // Marca como visualizado no banco
             await supabase.from('participantes')
                 .update({ ja_vizualizou: true })
                 .eq('id', estado.meuUsuario.id);
@@ -398,12 +415,49 @@
             }
         }
 
+        // --- FUNÇÕES DE ANIMAÇÃO (MANTIDAS) ---
+        function createSnowflakes() {
+            const container = document.getElementById('snow-container');
+            for (let i = 0; i < 50; i++) {
+                const flake = document.createElement('div');
+                flake.className = 'snowflake';
+                flake.innerHTML = '&#10052;'; // Símbolo de floco de neve
+                flake.style.left = `${Math.random() * 100}%`;
+                flake.style.fontSize = `${Math.random() * 1 + 0.8}em`;
+                
+                // Animação simples via JS para não complicar CSS
+                animateSnowflake(flake);
+                
+                container.appendChild(flake);
+            }
+        }
+        
+        function animateSnowflake(flake) {
+            let top = -10;
+            const speed = Math.random() * 1 + 0.5;
+            
+            function fall() {
+                top += speed;
+                if (top > window.innerHeight) {
+                    top = -10;
+                    flake.style.left = `${Math.random() * 100}%`;
+                }
+                flake.style.top = `${top}px`;
+                requestAnimationFrame(fall);
+            }
+            requestAnimationFrame(fall); // Começa a animação
+        }
+
         // --- INICIALIZAÇÃO ---
         window.onload = function() {
+            createSnowflakes();
+            
+            // Verifica se tem parâmetro na URL (?k=CODIGO)
             const urlParams = new URLSearchParams(window.location.search);
-            const k = urlParams.get('k');
-            if (k) {
-                carregarTelaParticipante(k);
+            const codigoLink = urlParams.get('k');
+            
+            if (codigoLink) {
+                carregarTelaParticipante(codigoLink);
             } else {
                 mostrarTela('screen-create');
             }
