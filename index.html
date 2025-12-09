@@ -348,158 +348,6 @@
             opacity: 0.8;
         }
         
-        /* Estilos para sugestões */
-        .suggestions-box {
-            background: rgba(184, 134, 11, 0.08);
-            border: 1px solid rgba(184, 134, 11, 0.2);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .suggestion-item {
-            margin-bottom: 15px;
-            position: relative;
-        }
-        
-        .suggestion-number {
-            position: absolute;
-            left: -10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(184, 134, 11, 0.3);
-            color: #b8860b;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-            border: 1px solid rgba(184, 134, 11, 0.5);
-        }
-        
-        .suggestion-input-wrapper {
-            margin-left: 20px;
-        }
-        
-        .suggestion-input {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            color: #fff;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-        
-        .suggestion-input:focus {
-            outline: none;
-            border-color: #b8860b;
-            background: rgba(184, 134, 11, 0.1);
-        }
-        
-        .suggestions-title {
-            color: #b8860b;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .suggestions-title i {
-            font-size: 0.9rem;
-        }
-        
-        .add-suggestion-btn {
-            background: rgba(46, 139, 87, 0.2);
-            color: #2e8b57;
-            border: 1px solid rgba(46, 139, 87, 0.3);
-            border-radius: 5px;
-            padding: 8px 15px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .add-suggestion-btn:hover {
-            background: rgba(46, 139, 87, 0.3);
-        }
-        
-        .remove-suggestion-btn {
-            background: rgba(178, 34, 34, 0.2);
-            color: #b22222;
-            border: 1px solid rgba(178, 34, 34, 0.3);
-            border-radius: 5px;
-            padding: 8px 15px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            margin-left: 10px;
-        }
-        
-        .remove-suggestion-btn:hover {
-            background: rgba(178, 34, 34, 0.3);
-        }
-        
-        .gift-suggestions {
-            background: rgba(184, 134, 11, 0.1);
-            border: 1px solid rgba(184, 134, 11, 0.2);
-            border-radius: 8px;
-            padding: 25px;
-            margin: 25px 0;
-        }
-        
-        .friend-suggestion-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 5px;
-        }
-        
-        .friend-suggestion-number {
-            background: rgba(184, 134, 11, 0.2);
-            color: #b8860b;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-weight: bold;
-            border: 1px solid rgba(184, 134, 11, 0.3);
-        }
-        
-        .friend-suggestion-text {
-            flex: 1;
-            color: #e8e6e3;
-        }
-        
-        .friend-suggestions-title {
-            color: #b8860b;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(184, 134, 11, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
         @media (max-width: 768px) {
             .container {
                 padding: 20px 15px;
@@ -559,15 +407,13 @@
             </button>
         </div>
         
-                <div id="screen-organizer" class="card hidden">
+        <div id="screen-organizer" class="card hidden">
             <h2 class="section-title">Organizando: <span id="sorteio-nome-display" style="color: #b8860b;"></span></h2>
             
             <div class="form-group">
                 <label class="form-label">Nome do Participante</label>
                 <input type="text" id="participante-nome" class="form-input" placeholder="Digite o nome completo">
             </div>
-            
-            <!-- REMOVIDA A SEÇÃO DE SUGESTÕES DE PRESENTES -->
             
             <button class="btn btn-primary" onclick="adicionarParticipante()" style="width: 100%; margin-top: 20px;">
                 <i class="fas fa-user-plus"></i> Adicionar Participante
@@ -614,7 +460,6 @@
                 </p>
             </div>
             
-            <!-- Tela simplificada - apenas mostra o resultado -->
             <div id="participant-result">
                 <div class="text-center" style="margin: 30px 0;">
                     <p style="color: #ccc; margin-bottom: 20px;">
@@ -779,7 +624,7 @@
             try {
                 const { data, error } = await supabase
                     .from('participantes')
-                    .select('*')
+                    .select('id, nome, amigo_secreto_id, amigo_secreto_nome, ja_vizualizou')
                     .eq('sorteio_id', estado.sorteio.id)
                     .order('nome');
                 
@@ -815,13 +660,18 @@
                 div.innerHTML = `
                     <div style="flex: 1;">
                         <div class="participant-name">${p.nome}</div>
-                        ${p.amigo_secreto_id ? 
-                            `<div style="font-size: 0.8rem; color: #2e8b57; margin-top: 5px;">
-                                <i class="fas fa-check-circle"></i> Já sorteado
+                        ${p.amigo_secreto_nome ? 
+                            `<div style="font-size: 0.85rem; color: #2e8b57; margin-top: 5px;">
+                                <i class="fas fa-check-circle"></i> Já foi sorteado
                             </div>` : 
                             `<div style="font-size: 0.8rem; color: #b8860b; margin-top: 5px;">
                                 <i class="fas fa-clock"></i> Aguardando sorteio
                             </div>`
+                        }
+                        ${p.ja_vizualizou ? 
+                            `<div style="font-size: 0.7rem; color: #aaa; margin-top: 3px;">
+                                <i class="fas fa-eye"></i> Já visualizou
+                            </div>` : ''
                         }
                     </div>
                     <div class="participant-status ${statusClass}">${statusText}</div>
@@ -841,7 +691,9 @@
                 const { error: resetError } = await supabase
                     .from('participantes')
                     .update({
-                        amigo_secreto_id: null
+                        amigo_secreto_id: null,
+                        amigo_secreto_nome: null,
+                        ja_vizualizou: false
                     })
                     .eq('sorteio_id', estado.sorteio.id);
                 
@@ -887,11 +739,12 @@
                     // Remover o sorteado da lista de disponíveis
                     participantesParaSortear = participantesParaSortear.filter(p => p.id !== amigoSorteado.id);
                     
-                    // Atualizar no banco de dados
+                    // Atualizar no banco de dados (SALVA O NOME DO AMIGO SORTEADO)
                     const { error: updateError } = await supabase
                         .from('participantes')
                         .update({
-                            amigo_secreto_id: amigoSorteado.id
+                            amigo_secreto_id: amigoSorteado.id,
+                            amigo_secreto_nome: amigoSorteado.nome
                         })
                         .eq('id', pessoaAtual.id);
                     
@@ -937,20 +790,13 @@
             for (const p of estado.participantes) {
                 const url = `${window.location.origin}${window.location.pathname}?sorteio=${estado.sorteio.codigo}&participante=${encodeURIComponent(p.nome)}`;
                 
-                // Obter nome do amigo secreto
-                const { data: amigoData } = await supabase
-                    .from('participantes')
-                    .select('nome')
-                    .eq('id', p.amigo_secreto_id)
-                    .single();
-                
                 const linkBox = document.createElement('div');
                 linkBox.className = 'link-box';
                 linkBox.innerHTML = `
                     <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <strong style="color: #fff;">${p.nome}</strong>
-                            ${amigoData ? 
+                            ${p.amigo_secreto_id ? 
                                 `<span style="font-size: 0.8rem; color: #2e8b57; margin-left: 10px;">
                                     <i class="fas fa-user-check"></i> Sorteio realizado
                                 </span>` : ''
@@ -965,14 +811,6 @@
                     <div style="margin-bottom: 10px;">
                         <a href="${url}" style="word-break: break-all; font-size: 0.85rem;">${url}</a>
                     </div>
-                    ${amigoData ? 
-                        `<div style="font-size: 0.8rem; color: #aaa; margin-top: 10px;">
-                            <div><strong>Amigo Secreto:</strong> <span style="color: #b8860b;">${amigoData.nome}</span></div>
-                        </div>` : 
-                        `<div style="font-size: 0.8rem; color: #b8860b; margin-top: 10px;">
-                            <i class="fas fa-exclamation-triangle"></i> Sorteio pendente
-                        </div>`
-                    }
                 `;
                 container.appendChild(linkBox);
             }
@@ -1055,16 +893,16 @@
                 
                 if (updateError) throw updateError;
                 
-                // Obter nome do amigo secreto
+                // Obter nome do amigo secreto (da coluna amigo_secreto_nome)
                 const { data: amigoData, error: amigoError } = await supabase
                     .from('participantes')
-                    .select('nome')
-                    .eq('id', estado.participante.amigo_secreto_id)
+                    .select('amigo_secreto_nome')
+                    .eq('id', estado.participante.id)
                     .single();
                 
                 if (amigoError) throw amigoError;
                 
-                document.getElementById('secret-friend-name').textContent = amigoData.nome;
+                document.getElementById('secret-friend-name').textContent = amigoData.amigo_secreto_nome;
                 
                 criarEfeitosNatalinos();
                 mostrarTela('screen-result');
@@ -1078,7 +916,6 @@
             window.location.href = window.location.pathname;
         }
         
-     
         function criarEfeitosNatalinos() {
             for (let i = 0; i < 30; i++) {
                 setTimeout(() => {
@@ -1110,7 +947,6 @@
             }
         }
         
-      
         function criarFlocosDeNeve() {
             const snowflakesContainer = document.getElementById('snowflakes');
             const snowflakeCount = 50;
@@ -1129,34 +965,31 @@
                 snowflake.style.opacity = Math.random() * 0.6 + 0.3;
                 
                 snowflakesContainer.appendChild(snowflake);
-                animateSnowflake(snowflake);
+                
+                // Animação simples
+                const duration = Math.random() * 10 + 15;
+                const delay = Math.random() * 5;
+                const amplitude = Math.random() * 30 + 10;
+                
+                snowflake.style.animation = `fall ${duration}s linear ${delay}s infinite`;
+                
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fall {
+                        0% {
+                            transform: translateY(-100px) translateX(0);
+                            opacity: ${snowflake.style.opacity};
+                        }
+                        100% {
+                            transform: translateY(100vh) translateX(${amplitude}px);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
             }
         }
         
-        function animateSnowflake(snowflake) {
-            const amplitude = Math.random() * 30 + 10;
-            const duration = Math.random() * 10 + 15;
-            const delay = Math.random() * 5;
-            
-            snowflake.style.animation = `fall ${duration}s linear ${delay}s infinite`;
-            
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fall {
-                    0% {
-                        transform: translateY(-100px) translateX(0);
-                        opacity: ${snowflake.style.opacity};
-                    }
-                    100% {
-                        transform: translateY(100vh) translateX(${amplitude}px);
-                        opacity: 0;
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-        }
-        
-      
         async function init() {
             criarFlocosDeNeve();
             
@@ -1167,7 +1000,6 @@
             }
         }
         
-      
         window.onload = init;
     </script>
 </body>
